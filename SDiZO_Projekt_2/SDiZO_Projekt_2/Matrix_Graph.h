@@ -7,7 +7,7 @@ private:
 	int vertex;
 	int edges;
 	int** graphMatrix;
-	Edge* edgeWeights;
+	int* edgeWeights;
 
 public:
 	Matrix_Graph();
@@ -20,6 +20,5 @@ public:
 	void print();
 
 	void Prims_algorithm();
-	void Dijikstras_algorithm();
 };
 

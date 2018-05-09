@@ -30,7 +30,6 @@ Matrix_Graph::Matrix_Graph()
 	}
 }
 
-
 Matrix_Graph::~Matrix_Graph()
 {
 }
@@ -43,23 +42,27 @@ void Matrix_Graph::readFromFile()
 	file.open("Dane.txt", std::ios::in);
 	if (file.good())
 	{
-		file >> vertex >> edges;	// odczyt liczby wierzcho³ków i krawêdzi grafu
-		graphMatrix = new int*[vertex];									// stworzenie dynamicznej tablicy dwuwymiarowej
-		for (i = 0; i < vertex; i++) graphMatrix[i] = new int[vertex];	// o rozmiarach n x n
-		edgeWeights = new Edge[edges];									// stworzenie tablicy z wagami krawêdzi
+		file >> edges >> vertex;	// odczyt liczby wierzcho³ków i krawêdzi grafu
+		graphMatrix = new int*[edges];									// stworzenie dynamicznej tablicy dwuwymiarowej
+		for (i = 0; i < edges; i++) graphMatrix[i] = new int[vertex];	// o rozmiarach wierzcho³ki x krawêdzie
+
+		edgeWeights = new int[edges];									// stworzenie tablicy z wagami krawêdzi
 
 		for (i = 0; i < vertex; i++) {
-			for (j = 0; j < vertex; j++) {
+			for (j = 0; j < edges; j++) {
 				graphMatrix[i][j] = 0;		// pocz¹tkowe wyzerowanie ca³ej zawartoœci macierzy grafu
 			}
 		}
 
 		int startVertex, endVertex, weight;
-		for (i = 1; i <= edges; i++)
+		int i = 0;
+
+		for (int i = 0; i < edges; i++)
 		{
 			file >> startVertex >> endVertex >> weight;
-			graphMatrix[startVertex][endVertex] = 1;
-			edgeWeights[i] = Edge(startVertex, endVertex, weight);
+			graphMatrix[startVertex][i] = 1;
+			graphMatrix[endVertex][i] = -1;
+			edgeWeights[i] = weight;
 		}
 
 		file.close();
@@ -76,7 +79,8 @@ void Matrix_Graph::createRandom()
 	int i, j;
 	graphMatrix = new int*[vertex];									// stworzenie dynamicznej tablicy dwuwymiarowej
 	for (i = 0; i < vertex; i++) graphMatrix[i] = new int[vertex];	// o rozmiarach n x n
-	edgeWeights = new Edge[edges];									// stworzenie tablicy z wagami krawêdzi
+
+	edgeWeights = new int[edges];									// stworzenie tablicy z wagami krawêdzi
 
 	for (i = 0; i < vertex; i++) {
 		for (j = 0; j < vertex; j++) {
@@ -94,8 +98,8 @@ void Matrix_Graph::createRandom()
 		} while (endVertex == startVertex);
 
 		graphMatrix[startVertex][endVertex] = 1;
-		weight = rand() + 0;
-		edgeWeights[i] = Edge(startVertex, endVertex, weight);
+		weight = rand() % 1000000 + 0;
+		edgeWeights[i-1] = weight;
 	}
 }
 
@@ -110,19 +114,19 @@ void Matrix_Graph::print()
 
 	std::cout << "\nMatrix representation: " << std::endl;
 	std::cout << "   ";
-	for (i = 0; i < vertex; i++) std::cout << std::setw(3) << i;
+	for (i = 0; i < edges; i++) std::cout << std::setw(3) << i;
 	std::cout << std::endl << std::endl;
 	for (i = 0; i < vertex; i++)
 	{
 		std::cout << std::setw(3) << i;
-		for (j = 0; j < vertex; j++) std::cout << std::setw(3) << (int)graphMatrix[i][j];
+		for (j = 0; j < edges; j++) std::cout << std::setw(3) << (int)graphMatrix[i][j];
 		std::cout << std::endl;
 	}
 
-	std::cout << "\n\nList of edges: " << std::endl;
+	std::cout << "\n\Weights of edges: " << std::endl;
 	for (int i = 0; i < edges; i++)
 	{
-	std::cout << edgeWeights[i].getStartVertex() << " " << edgeWeights[i].getEndVertex() << " weight -> " << edgeWeights[i].getWeight() << std::endl;
+		std::cout << edgeWeights[i] << " ";
 	}
 }
 
