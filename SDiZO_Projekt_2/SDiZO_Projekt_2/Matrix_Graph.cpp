@@ -1,6 +1,8 @@
 #include "stdafx.h"
 #include "Matrix_Graph.h"
 #include "Edge.h"
+#include "BinaryHeap.h"
+#include "Array.h"
 
 #include <iostream>
 #include <fstream>
@@ -135,9 +137,10 @@ void Matrix_Graph::print()
 	std::cout << std::endl;
 }
 
-/*
 void Matrix_Graph::Prims_algorithm()
 {
+	BinaryHeap queue = BinaryHeap();
+	Array primsEdges = Array();
 	bool* visited = new bool[vertex];	// tablica z informacj¹, czy dany wierzcho³ek zosta³ odwiedzony
 	visited[0] = true;	// odwiedzamy od razu pierwszy wierzcho³ek
 	for (unsigned int i = 1; i < vertex; i++) visited[i] = false;	// a reszty na razie nie
@@ -156,7 +159,7 @@ void Matrix_Graph::Prims_algorithm()
 						if (!visited[v2]) // to sprawdzamy, czy dany wierzcho³ek ju¿ nie by³ odwiedzony
 						{
 							std::cout << "New edge found!" << v << " " << v2 << " weight: " << edgeWeights[e] << std::endl;
-							queue.push(Edge(v, v2, edgeWeights[e]));	// wrzucamy go do kolejki wierzcho³ków
+							queue.addNewElement(new Edge(v, v2, edgeWeights[e]));	// wrzucamy go do kolejki wierzcho³ków
 							break;
 						}
 					}
@@ -167,24 +170,21 @@ void Matrix_Graph::Prims_algorithm()
 		Edge edge;
 		do
 		{
-			edge = queue.top();
+			edge = *queue.getRoot();
 		} while (visited[edge.endVertex]);
 		visited[edge.endVertex] = true;
-		primsEdges.push_back(edge);
+		primsEdges.pushBack(&edge);
 		std::cout << "\nEdge added to primsEdges: " << edge.startVertex << " " << edge.endVertex << " " << edge.weight << std::endl;
 		v = edge.endVertex;
 	}
 
-	primsEdges.shrink_to_fit();
-	int e = primsEdges.size();
+	int e = primsEdges.getSize();
 	int totalCost = 0;
 	std::cout << "Minimal Spanning Tree" << std::endl;
 	for (int i = 0; i < e; i++)
 	{
-		std::cout << primsEdges[i].startVertex << " " << primsEdges[i].endVertex << " weight: " << primsEdges[i].weight << std::endl;
-		totalCost += primsEdges[i].weight;
+		std::cout << primsEdges[i]->startVertex << " " << primsEdges[i]->endVertex << " weight: " << primsEdges[i]->weight << std::endl;
+		totalCost += primsEdges[i]->weight;
 	}
-
 	std::cout << "\nTotal cost: " << totalCost << std::endl;
 }
-*/

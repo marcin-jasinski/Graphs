@@ -7,7 +7,10 @@
 
 // default heap constructor is empty
 // no need to pre-initialize elements array
-BinaryHeap::BinaryHeap(){}
+BinaryHeap::BinaryHeap()
+{
+	this->heapElements = new Array();
+}
 
 // default destructor
 BinaryHeap::~BinaryHeap() {}
@@ -20,7 +23,7 @@ int BinaryHeap::getSize()
 
 // adding new element to the heap using already existing pushBack function from the Array class
 // fixing heap up after adding new element
-void BinaryHeap::addNewElement(Edge element)
+void BinaryHeap::addNewElement(Edge* element)
 {
 	heapElements->pushBack(element);
 	heapFix_UP(heapElements->getSize() - 1);
@@ -42,12 +45,12 @@ void BinaryHeap::deleteRoot()
 }
 
 // returns current maximum element (root)
-Edge BinaryHeap::getRoot()
+Edge* BinaryHeap::getRoot()
 {
 	if (heapElements->getSize() == 0)
 	{
 		std::cout << "\nHeap is empty" << std::endl;
-		return { 0, 0, 0 };
+		return nullptr;
 	}
 
 	else return heapElements->get(0);
@@ -81,9 +84,9 @@ int BinaryHeap::parent(int childIndex)
 // function compares current child element with its parent and if the parent element is smaller than it's child - swaps them
 void BinaryHeap::heapFix_UP(int startIndex)
 {
-	if (startIndex >= 0 && parent(startIndex) >= 0 && heapElements->get(parent(startIndex)).weight < heapElements->get(startIndex).weight)
+	if (startIndex >= 0 && parent(startIndex) >= 0 && heapElements->get(parent(startIndex))->weight > heapElements->get(startIndex)->weight)
 	{
-		Edge tempHold = heapElements->get(startIndex); // temporary holding parent element
+		Edge* tempHold = heapElements->get(startIndex); // temporary holding parent element
 		heapElements->replaceValueOnIndex(startIndex, heapElements->get(parent(startIndex)));
 		heapElements->replaceValueOnIndex(parent(startIndex), tempHold);
 		heapFix_UP(parent(startIndex));
@@ -100,18 +103,17 @@ void BinaryHeap::heapFix_DOWN(int startIndex)
 	int second_child = get_right_child(startIndex);
 
 	// if both children indexes are in the array and left child is smaller than right child - swap 
-	if (first_child >= 0 && second_child >= 0 && heapElements->get(first_child).weight < heapElements->get(second_child).weight)
+	if (first_child >= 0 && second_child >= 0 && heapElements->get(first_child)->weight > heapElements->get(second_child)->weight)
 	{
 		first_child = second_child;
 	}
 
 	// if parent element is smaller than it's current child - swap
-	if (first_child > 0 && heapElements->get(startIndex).weight < heapElements->get(first_child).weight)
+	if (first_child > 0 && heapElements->get(startIndex)->weight > heapElements->get(first_child)->weight)
 	{
-		Edge temp = heapElements->get(startIndex);	// temporary holding parent element
+		Edge* temp = heapElements->get(startIndex);	// temporary holding parent element
 		heapElements->replaceValueOnIndex(startIndex, heapElements->get(first_child));
 		heapElements->replaceValueOnIndex(first_child, temp);
 		heapFix_DOWN(first_child);
 	}
 }
-

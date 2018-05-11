@@ -3,17 +3,12 @@
 class Edge
 {
 public:
-
-	int startVertex, endVertex;
+	int startVertex;
+	int endVertex;
 	int weight;
 
 	Edge();
 	Edge(int, int, int);
 	~Edge();
-
-	int getStartVertex();
-	int getEndVertex();
-	int getWeight();
 };
-
 

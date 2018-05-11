@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "Edge.h"
 
+
 Edge::Edge()
 {
 	this->startVertex = 0;
@@ -8,28 +9,13 @@ Edge::Edge()
 	this->weight = 0;
 }
 
-Edge::Edge(int start, int end, int weight)
+Edge::Edge(int s, int e, int w)
 {
-	this->startVertex = start;
-	this->endVertex = end;
-	this->weight = weight;
+	this->startVertex = s;
+	this->endVertex = e;
+	this->weight = w;
 }
 
 Edge::~Edge()
 {
-}
-
-int Edge::getStartVertex()
-{
-	return startVertex; 
-}
-
-int Edge::getEndVertex()
-{ 
-	return endVertex; 
-}
-
-int Edge::getWeight()
-{
-	return weight; 
 }

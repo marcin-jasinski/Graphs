@@ -1,5 +1,4 @@
 #pragma once
-#include "Edge.h"
 
 class Matrix_Graph
 {

@@ -1,12 +1,11 @@
 #pragma once
 #include "Edge.h"
-#include <iostream>
 
 class Array
 {
 private:
-	Edge* _headPtr;	// pointer to dynamic array of Edges
-	int arraySize;  // current number of Edges in the array
+	Edge** _headPtr;	// pointer to dynamic array of integers
+	int arraySize;  // current number of elements in the array
 
 public:
 	Array();
@@ -14,18 +13,16 @@ public:
 	~Array();
 
 	int getSize() const;
-	Edge* getHeadPtr();
 
-	void pushFront(Edge);
-	void pushBack(Edge);
+	void pushFront(Edge*);
+	void pushBack(Edge*);
 	void popFront();
 	void popBack();
 
-	void insertValueOnIndex(int, Edge);
+	void insertValueOnIndex(int, Edge*);
 	void deleteValueFromIndex(int);
-	void replaceValueOnIndex(int, Edge);
+	void replaceValueOnIndex(int, Edge*);
 
-	Edge get(int);
-	Edge operator[](int) const;
+	Edge* get(int);
+	Edge* operator[](int) const;
 };
-

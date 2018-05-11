@@ -3,7 +3,6 @@
 #include <cstdlib>
 #include <string>
 #include "Array.h"
-#include "Edge.h"
 
 class BinaryHeap
 {
@@ -24,9 +23,11 @@ public:
 	BinaryHeap();
 	~BinaryHeap();
 
-	Edge getRoot();
+	Edge* getRoot();
 	int getSize();
 
-	void addNewElement(Edge);
+	void addNewElement(Edge*);
 	void deleteRoot();
 };
+
+
