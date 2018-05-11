@@ -2,11 +2,11 @@
 
 class Edge
 {
-private:
+public:
+
 	int startVertex, endVertex;
 	int weight;
 
-public:
 	Edge();
 	Edge(int, int, int);
 	~Edge();
