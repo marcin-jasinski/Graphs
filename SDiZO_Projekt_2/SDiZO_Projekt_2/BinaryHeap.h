@@ -24,6 +24,7 @@ public:
 	~BinaryHeap();
 
 	Edge* getRoot();
+	Edge* getFromIndex(int);
 	int getSize();
 
 	void addNewElement(Edge*);

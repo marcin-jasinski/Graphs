@@ -24,7 +24,7 @@ Array::Array(int arraySize)
 // releasing memory 
 Array::~Array()
 {
-	this->_headPtr = nullptr;
+	delete [] *_headPtr;
 	this->arraySize = 0;
 }
 
@@ -138,7 +138,7 @@ void Array::deleteValueFromIndex(int index)
 	memcpy(_tempPtr, _headPtr, index * sizeof(Edge*));
 	this->arraySize--;
 	memcpy(_tempPtr + index, this->_headPtr + index + 1, (this->arraySize - index) * sizeof(Edge*));
-	delete[] _headPtr;
+	delete [] _headPtr;
 	this->_headPtr = _tempPtr;
 }
 

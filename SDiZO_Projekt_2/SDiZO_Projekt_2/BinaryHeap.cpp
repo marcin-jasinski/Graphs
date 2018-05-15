@@ -41,7 +41,7 @@ void BinaryHeap::deleteRoot()
 	heapElements->replaceValueOnIndex(0, heapElements->get(heapElements->getSize() - 1));		// copying last added element to the root node (on the top of the heap)
 	heapElements->popBack();																	// deleting last added element 
 	heapFix_DOWN(0);																			// fixing heap downwards
-	std::cout << "Element Deleted" << std::endl;
+	std::cout << "Root Element Deleted" << std::endl;
 }
 
 // returns current maximum element (root)
@@ -54,6 +54,11 @@ Edge* BinaryHeap::getRoot()
 	}
 
 	else return heapElements->get(0);
+}
+
+Edge * BinaryHeap::getFromIndex(int index)
+{
+	return heapElements->get(index);
 }
 
 // returns left child index of the selected element

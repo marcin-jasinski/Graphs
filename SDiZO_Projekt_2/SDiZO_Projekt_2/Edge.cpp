@@ -1,7 +1,6 @@
 #include "stdafx.h"
 #include "Edge.h"
 
-
 Edge::Edge()
 {
 	this->startVertex = 0;
@@ -18,4 +17,5 @@ Edge::Edge(int s, int e, int w)
 
 Edge::~Edge()
 {
+
 }

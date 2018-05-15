@@ -20,6 +20,8 @@ Matrix_Graph::Matrix_Graph()
 {
 	std::cout << "Read from file(1) or create at random(2)? " << std::endl;
 	int choice;
+	std::cin.clear();
+	fflush(stdin);
 	std::cin >> choice;
 
 	switch (choice) {
@@ -41,11 +43,12 @@ Matrix_Graph::~Matrix_Graph()
 
 void Matrix_Graph::readFromFile()
 {
-	std::ifstream file;
+	std::fstream file;
 	int i, j;
 
-	file.open("Dane.txt");
-	if (file.good())
+	file.open("Dane.txt", std::ios::in);
+
+	if (file.good() == true)
 	{
 		file >> edges >> vertex;	// odczyt liczby wierzcho³ków i krawêdzi grafu
 		graphMatrix = new int*[edges];									// stworzenie dynamicznej tablicy dwuwymiarowej
@@ -66,12 +69,13 @@ void Matrix_Graph::readFromFile()
 		{
 			file >> startVertex >> endVertex >> weight;		// odczytywanie kolejnych krawêdzi i zapis do macierzy
 			graphMatrix[startVertex][i] = 1;
-			graphMatrix[endVertex][i] = -1;
+			graphMatrix[endVertex][i] = 1;
 			edgeWeights[i] = weight;
 		}
-	}
 
-	file.close();
+		file.close();
+	}
+	else std::cout << "Error opening file!!!" << std::endl;
 }
 
 void Matrix_Graph::createRandom()
@@ -94,7 +98,7 @@ void Matrix_Graph::createRandom()
 	}
 
 	int startVertex, endVertex, weight;
-	for (i = 1; i <= edges; i++)
+	for (i = 0; i < edges; i++)
 	{
 		startVertex = (std::rand() % vertex) + 0;
 		do
@@ -103,8 +107,8 @@ void Matrix_Graph::createRandom()
 		} while (endVertex == startVertex);
 
 		graphMatrix[startVertex][i] = 1;
-		graphMatrix[endVertex][i] = -1;
-		weight = rand() % 100000 + 0;
+		graphMatrix[endVertex][i] = 1;
+		weight = rand() % 1000 + 0;
 		edgeWeights[i-1] = weight;
 	}
 }
@@ -141,24 +145,27 @@ void Matrix_Graph::Prims_algorithm()
 {
 	BinaryHeap queue = BinaryHeap();
 	Array primsEdges = Array();
+	Edge* edge;
 	bool* visited = new bool[vertex];	// tablica z informacj¹, czy dany wierzcho³ek zosta³ odwiedzony
 	visited[0] = true;	// odwiedzamy od razu pierwszy wierzcho³ek
 	for (unsigned int i = 1; i < vertex; i++) visited[i] = false;	// a reszty na razie nie
-
+	
 	unsigned int v = 0;
 	for (unsigned int i = 0; i < vertex - 1; i++)	// iterujemy po kolejnych wierzcho³kach
 	{	
+		std::cout << "\n==> Current vertex: " << v << std::endl;
 		for (unsigned int e = 0; e < edges; e++) // i szukamy krawêdzi zeñ wychodz¹cych
 		{
+			std::cout << "Current edge: " << e << std::endl;
 			if (get(v, e) == 1) // jeœli natrafiliœmy na krawêdŸ
 			{
 				for (unsigned int v2 = 0; v2 < vertex; v2++) // to szukamy koñca tej krawêdzi
 				{
-					if (v != v2 && get(v2, e) == -1) // jeœli trafiliœmy na koniec
+					if (v != v2 && get(v2, e) == 1) // jeœli trafiliœmy na koniec
 					{
 						if (!visited[v2]) // to sprawdzamy, czy dany wierzcho³ek ju¿ nie by³ odwiedzony
 						{
-							std::cout << "New edge found!" << v << " " << v2 << " weight: " << edgeWeights[e] << std::endl;
+							std::cout << "New edge found! -> " << v << " " << v2 << " weight: " << edgeWeights[e] << std::endl;
 							queue.addNewElement(new Edge(v, v2, edgeWeights[e]));	// wrzucamy go do kolejki wierzcho³ków
 							break;
 						}
@@ -167,23 +174,38 @@ void Matrix_Graph::Prims_algorithm()
 			}
 		}
 
-		Edge edge;
+		std::cout << "\nList of edges currently in queue: " << std::endl;	// wypisanie aktualnej kolejki wierzcho³ków
+		for (int x = 0; x < queue.getSize(); x++)
+		{
+			std::cout << queue.getFromIndex(x)->startVertex << " " << queue.getFromIndex(x)->endVertex << " weight: " << queue.getFromIndex(x)->weight << std::endl;
+		}
+
+		edge = queue.getRoot();
+		if (edge == nullptr)
+		{
+			v++;
+			if (v >= vertex) break;
+			continue;
+		}
+
 		do
 		{
-			edge = *queue.getRoot();
-		} while (visited[edge.endVertex]);
-		visited[edge.endVertex] = true;
-		primsEdges.pushBack(&edge);
-		std::cout << "\nEdge added to primsEdges: " << edge.startVertex << " " << edge.endVertex << " " << edge.weight << std::endl;
-		v = edge.endVertex;
+			queue.deleteRoot();
+		} while (!edge->endVertex);
+
+		primsEdges.pushBack(edge);
+		std::cout << "Edge added to primsEdges: " << edge->startVertex << " " << edge->endVertex << " weight: " << edge->weight << std::endl;
+		visited[edge->endVertex] = true;
+		queue.deleteRoot();
+		v = edge->endVertex;
 	}
 
 	int e = primsEdges.getSize();
 	int totalCost = 0;
-	std::cout << "Minimal Spanning Tree" << std::endl;
+	std::cout << "\n\nMinimal Spanning Tree" << std::endl;
 	for (int i = 0; i < e; i++)
 	{
-		std::cout << primsEdges[i]->startVertex << " " << primsEdges[i]->endVertex << " weight: " << primsEdges[i]->weight << std::endl;
+		std::cout << "Edge " << i << " -> " << primsEdges[i]->startVertex << " " << primsEdges[i]->endVertex << " weight: " << primsEdges[i]->weight << std::endl;
 		totalCost += primsEdges[i]->weight;
 	}
 	std::cout << "\nTotal cost: " << totalCost << std::endl;
