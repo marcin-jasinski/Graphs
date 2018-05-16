@@ -99,7 +99,6 @@ void Matrix_Graph::createRandom()
 
 		std::cout << startVertex << " " << endVertex << " -> " << weight << std::endl;
 	}
-	
 }
 
 int Matrix_Graph::get(int row, int column)
@@ -137,18 +136,18 @@ void Matrix_Graph::Prims_algorithm()
 	Edge* edge;
 	bool* visited = new bool[vertex];	// tablica z informacją, czy dany wierzchołek został odwiedzony
 	visited[0] = true;	// odwiedzamy od razu pierwszy wierzchołek
-	for (unsigned int i = 1; i < vertex; i++) visited[i] = false;	// a reszty na razie nie
+	for (int i = 1; i < vertex; i++) visited[i] = false;	// a reszty na razie nie
 	
-	unsigned int v = 0;
-	for (unsigned int i = 0; i < vertex - 1; i++)	// iterujemy po kolejnych wierzchołkach
+	int v = 0;
+	for (int i = 0; i < vertex - 1; i++)	// iterujemy po kolejnych wierzchołkach
 	{	
 		std::cout << "\n==> Current vertex: " << v << std::endl;
-		for (unsigned int e = 0; e < edges; e++) // i szukamy krawędzi zeń wychodzących
+		for (int e = 0; e < edges; e++) // i szukamy krawędzi zeń wychodzących
 		{
 			std::cout << "Current edge: " << e << std::endl;
 			if (get(v, e) == 1) // jeśli natrafiliśmy na krawędź
 			{
-				for (unsigned int v2 = 0; v2 < vertex; v2++) // to szukamy końca tej krawędzi
+				for (int v2 = 0; v2 < vertex; v2++) // to szukamy końca tej krawędzi
 				{
 					if (v != v2 && get(v2, e) == 1) // jeśli trafiliśmy na koniec
 					{

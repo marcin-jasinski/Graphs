@@ -150,8 +150,10 @@
     <ClInclude Include="Array.h" />
     <ClInclude Include="BinaryHeap.h" />
     <ClInclude Include="Edge.h" />
+    <ClInclude Include="List_Graph.h" />
     <ClInclude Include="Matrix_Graph.h" />
     <ClInclude Include="Menu.h" />
+    <ClInclude Include="Node.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
   </ItemGroup>
@@ -159,8 +161,10 @@
     <ClCompile Include="Array.cpp" />
     <ClCompile Include="BinaryHeap.cpp" />
     <ClCompile Include="Edge.cpp" />
+    <ClCompile Include="List_Graph.cpp" />
     <ClCompile Include="Matrix_Graph.cpp" />
     <ClCompile Include="Menu.cpp" />
+    <ClCompile Include="Node.cpp" />
     <ClCompile Include="SDiZO_Projekt_2.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
