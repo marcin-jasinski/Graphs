@@ -1,4 +1,4 @@
-#include "stdafx.h"
+ï»¿#include "stdafx.h"
 #include "Matrix_Graph.h"
 #include "Edge.h"
 #include "BinaryHeap.h"
@@ -18,23 +18,6 @@
 
 Matrix_Graph::Matrix_Graph()
 {
-	std::cout << "Read from file(1) or create at random(2)? " << std::endl;
-	int choice;
-	std::cin.clear();
-	fflush(stdin);
-	std::cin >> choice;
-
-	switch (choice) {
-	case 1:
-		readFromFile();
-		break;
-	case 2:
-		createRandom();
-		break;
-	default:
-		std::cout << "Error." << std::endl;
-		break;
-	}
 }
 
 Matrix_Graph::~Matrix_Graph()
@@ -50,15 +33,15 @@ void Matrix_Graph::readFromFile()
 
 	if (file.good() == true)
 	{
-		file >> edges >> vertex;	// odczyt liczby wierzcho³ków i krawêdzi grafu
+		file >> edges >> vertex;	// odczyt liczby wierzchoÅ‚kÃ³w i krawÄ™dzi grafu
 		graphMatrix = new int*[edges];									// stworzenie dynamicznej tablicy dwuwymiarowej
-		for (i = 0; i < edges; i++) graphMatrix[i] = new int[vertex];	// o rozmiarach wierzcho³ki x krawêdzie
+		for (i = 0; i < edges; i++) graphMatrix[i] = new int[vertex];	// o rozmiarach wierzchoÅ‚ki x krawÄ™dzie
 
-		edgeWeights = new int[edges];									// stworzenie tablicy z wagami krawêdzi
+		edgeWeights = new int[edges];									// stworzenie tablicy z wagami krawÄ™dzi
 
 		for (i = 0; i < vertex; i++) {
 			for (j = 0; j < edges; j++) {
-				graphMatrix[i][j] = 0;		// pocz¹tkowe wyzerowanie ca³ej zawartoœci macierzy grafu
+				graphMatrix[i][j] = 0;		// poczÄ…tkowe wyzerowanie caÅ‚ej zawartoÅ›ci macierzy grafu
 			}
 		}
 
@@ -67,7 +50,7 @@ void Matrix_Graph::readFromFile()
 
 		for (int i = 0; i < edges; i++)
 		{
-			file >> startVertex >> endVertex >> weight;		// odczytywanie kolejnych krawêdzi i zapis do macierzy
+			file >> startVertex >> endVertex >> weight;		// odczytywanie kolejnych krawÄ™dzi i zapis do macierzy
 			graphMatrix[startVertex][i] = 1;
 			graphMatrix[endVertex][i] = 1;
 			edgeWeights[i] = weight;
@@ -89,28 +72,34 @@ void Matrix_Graph::createRandom()
 	graphMatrix = new int*[vertex];									// stworzenie dynamicznej tablicy dwuwymiarowej
 	for (i = 0; i < vertex; i++) graphMatrix[i] = new int[vertex];	// o rozmiarach n x n
 
-	edgeWeights = new int[edges];									// stworzenie tablicy z wagami krawêdzi
+	edgeWeights = new int[edges];									// stworzenie tablicy z wagami krawÄ™dzi
 
 	for (i = 0; i < vertex; i++) {
-		for (j = 0; j < vertex; j++) {
-			graphMatrix[i][j] = 0;		// pocz¹tkowe wyzerowanie ca³ej zawartoœci macierzy grafu
+		for (j = 0; j < edges; j++) {
+			graphMatrix[i][j] = 0;		// poczÄ…tkowe wyzerowanie caÅ‚ej zawartoÅ›ci macierzy grafu
 		}
 	}
 
-	int startVertex, endVertex, weight;
-	for (i = 0; i < edges; i++)
+	unsigned int startVertex, endVertex, weight;
+
+	srand(time(NULL));
+	for (int i = 0; i < edges; i++)
 	{
-		startVertex = (std::rand() % vertex) + 0;
+		startVertex = rand() % vertex;
+
 		do
 		{
-			endVertex = (std::rand() % vertex) + 0;
-		} while (endVertex == startVertex);
+			endVertex = rand() % vertex;
+		} while (startVertex == endVertex);
 
 		graphMatrix[startVertex][i] = 1;
 		graphMatrix[endVertex][i] = 1;
-		weight = rand() % 1000 + 0;
-		edgeWeights[i-1] = weight;
+		weight = rand() % 10000;
+		edgeWeights[i] = weight;
+
+		std::cout << startVertex << " " << endVertex << " -> " << weight << std::endl;
 	}
+	
 }
 
 int Matrix_Graph::get(int row, int column)
@@ -123,20 +112,20 @@ void Matrix_Graph::print()
 	int i, j;
 
 	std::cout << "\nMatrix representation: " << std::endl;
-	std::cout << "   ";
-	for (i = 0; i < edges; i++) std::cout << std::setw(3) << i;
+	std::cout << std::endl;
+	for (i = 0; i < edges; i++) std::cout << std::setw(4) << i;
 	std::cout << std::endl << std::endl;
 	for (i = 0; i < vertex; i++)
 	{
 		std::cout << std::setw(3) << i;
-		for (j = 0; j < edges; j++) std::cout << std::setw(3) << (int)graphMatrix[i][j];
+		for (j = 0; j < edges; j++) std::cout << std::setw(4) << (int)graphMatrix[i][j];
 		std::cout << std::endl;
 	}
 
 	std::cout << "\nWeights of edges: " << std::endl;
 	for (int i = 0; i < edges; i++)
 	{
-		std::cout << edgeWeights[i] << " ";
+		std::cout << "[" << edgeWeights[i] << "]";
 	}
 	std::cout << std::endl;
 }
@@ -146,27 +135,27 @@ void Matrix_Graph::Prims_algorithm()
 	BinaryHeap queue = BinaryHeap();
 	Array primsEdges = Array();
 	Edge* edge;
-	bool* visited = new bool[vertex];	// tablica z informacj¹, czy dany wierzcho³ek zosta³ odwiedzony
-	visited[0] = true;	// odwiedzamy od razu pierwszy wierzcho³ek
+	bool* visited = new bool[vertex];	// tablica z informacjÄ…, czy dany wierzchoÅ‚ek zostaÅ‚ odwiedzony
+	visited[0] = true;	// odwiedzamy od razu pierwszy wierzchoÅ‚ek
 	for (unsigned int i = 1; i < vertex; i++) visited[i] = false;	// a reszty na razie nie
 	
 	unsigned int v = 0;
-	for (unsigned int i = 0; i < vertex - 1; i++)	// iterujemy po kolejnych wierzcho³kach
+	for (unsigned int i = 0; i < vertex - 1; i++)	// iterujemy po kolejnych wierzchoÅ‚kach
 	{	
 		std::cout << "\n==> Current vertex: " << v << std::endl;
-		for (unsigned int e = 0; e < edges; e++) // i szukamy krawêdzi zeñ wychodz¹cych
+		for (unsigned int e = 0; e < edges; e++) // i szukamy krawÄ™dzi zeÅ„ wychodzÄ…cych
 		{
 			std::cout << "Current edge: " << e << std::endl;
-			if (get(v, e) == 1) // jeœli natrafiliœmy na krawêdŸ
+			if (get(v, e) == 1) // jeÅ›li natrafiliÅ›my na krawÄ™dÅº
 			{
-				for (unsigned int v2 = 0; v2 < vertex; v2++) // to szukamy koñca tej krawêdzi
+				for (unsigned int v2 = 0; v2 < vertex; v2++) // to szukamy koÅ„ca tej krawÄ™dzi
 				{
-					if (v != v2 && get(v2, e) == 1) // jeœli trafiliœmy na koniec
+					if (v != v2 && get(v2, e) == 1) // jeÅ›li trafiliÅ›my na koniec
 					{
-						if (!visited[v2]) // to sprawdzamy, czy dany wierzcho³ek ju¿ nie by³ odwiedzony
+						if (!visited[v2]) // to sprawdzamy, czy dany wierzchoÅ‚ek juÅ¼ nie byÅ‚ odwiedzony
 						{
 							std::cout << "New edge found! -> " << v << " " << v2 << " weight: " << edgeWeights[e] << std::endl;
-							queue.addNewElement(new Edge(v, v2, edgeWeights[e]));	// wrzucamy go do kolejki wierzcho³ków
+							queue.addNewElement(new Edge(v, v2, edgeWeights[e]));	// wrzucamy go do kolejki wierzchoÅ‚kÃ³w
 							break;
 						}
 					}
@@ -174,7 +163,7 @@ void Matrix_Graph::Prims_algorithm()
 			}
 		}
 
-		std::cout << "\nList of edges currently in queue: " << std::endl;	// wypisanie aktualnej kolejki wierzcho³ków
+		std::cout << "\nList of edges currently in queue: " << std::endl;	// wypisanie aktualnej kolejki wierzchoÅ‚kÃ³w
 		for (int x = 0; x < queue.getSize(); x++)
 		{
 			std::cout << queue.getFromIndex(x)->startVertex << " " << queue.getFromIndex(x)->endVertex << " weight: " << queue.getFromIndex(x)->weight << std::endl;
