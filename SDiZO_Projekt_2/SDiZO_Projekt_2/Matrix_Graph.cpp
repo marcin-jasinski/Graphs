@@ -7,14 +7,10 @@
 #include <iostream>
 #include <fstream>
 #include <string>
-#include <queue>
 #include <conio.h>
 #include <cstdlib>
 #include <ctime>
 #include <iomanip>
-#include <vector>
-#include <functional>   // std::greater
-#include <algorithm>    // std::sort
 
 Matrix_Graph::Matrix_Graph()
 {
@@ -22,37 +18,40 @@ Matrix_Graph::Matrix_Graph()
 
 Matrix_Graph::~Matrix_Graph()
 {
+	for (int i = 0; i < edges; i++) delete graphMatrix[i];
+	delete[] graphMatrix;
+	delete[] edgeWeights;
 }
 
-void Matrix_Graph::readFromFile()
+void Matrix_Graph::readFromFile(std::string type)
 {
 	std::fstream file;
-	int i, j;
-
 	file.open("Dane.txt", std::ios::in);
 
 	if (file.good() == true)
 	{
+		int i, j;
 		file >> edges >> vertex;	// odczyt liczby wierzchołków i krawędzi grafu
+
 		graphMatrix = new int*[edges];									// stworzenie dynamicznej tablicy dwuwymiarowej
 		for (i = 0; i < edges; i++) graphMatrix[i] = new int[vertex];	// o rozmiarach wierzchołki x krawędzie
 
 		edgeWeights = new int[edges];									// stworzenie tablicy z wagami krawędzi
 
-		for (i = 0; i < vertex; i++) {
-			for (j = 0; j < edges; j++) {
+		for (i = 0; i < edges; i++) {
+			for (j = 0; j < vertex; j++) {
 				graphMatrix[i][j] = 0;		// początkowe wyzerowanie całej zawartości macierzy grafu
 			}
 		}
 
 		int startVertex, endVertex, weight;
-		int i = 0;
 
-		for (int i = 0; i < edges; i++)
+		for (i = 0; i < edges; i++)
 		{
 			file >> startVertex >> endVertex >> weight;		// odczytywanie kolejnych krawędzi i zapis do macierzy
-			graphMatrix[startVertex][i] = 1;
-			graphMatrix[endVertex][i] = 1;
+			graphMatrix[i][startVertex] = 1;
+			if(type == "nieskierowany") graphMatrix[i][endVertex] = 1;
+			else graphMatrix[i][endVertex] = -1;
 			edgeWeights[i] = weight;
 		}
 
@@ -112,11 +111,12 @@ void Matrix_Graph::print()
 
 	std::cout << "\nMatrix representation: " << std::endl;
 	std::cout << std::endl;
+	std::cout << std::setw(4) << " ";
 	for (i = 0; i < edges; i++) std::cout << std::setw(4) << i;
 	std::cout << std::endl << std::endl;
 	for (i = 0; i < vertex; i++)
 	{
-		std::cout << std::setw(3) << i;
+		std::cout << std::setw(4) << i;
 		for (j = 0; j < edges; j++) std::cout << std::setw(4) << (int)graphMatrix[i][j];
 		std::cout << std::endl;
 	}
@@ -124,7 +124,7 @@ void Matrix_Graph::print()
 	std::cout << "\nWeights of edges: " << std::endl;
 	for (int i = 0; i < edges; i++)
 	{
-		std::cout << "[" << edgeWeights[i] << "]";
+		std::cout << std::setw(4) << "[" << edgeWeights[i] << "]";
 	}
 	std::cout << std::endl;
 }
@@ -133,7 +133,7 @@ void Matrix_Graph::Prims_algorithm()
 {
 	BinaryHeap queue = BinaryHeap();
 	Array primsEdges = Array();
-	Edge* edge;
+	Edge* edge = nullptr;
 	bool* visited = new bool[vertex];	// tablica z informacją, czy dany wierzchołek został odwiedzony
 	visited[0] = true;	// odwiedzamy od razu pierwszy wierzchołek
 	for (int i = 1; i < vertex; i++) visited[i] = false;	// a reszty na razie nie
@@ -197,4 +197,7 @@ void Matrix_Graph::Prims_algorithm()
 		totalCost += primsEdges[i]->weight;
 	}
 	std::cout << "\nTotal cost: " << totalCost << std::endl;
+
+	delete edge;
+	delete[] visited;
 }

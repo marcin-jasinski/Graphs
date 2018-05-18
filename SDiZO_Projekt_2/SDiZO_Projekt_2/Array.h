@@ -14,12 +14,9 @@ public:
 
 	int getSize() const;
 
-	void pushFront(Edge*);
 	void pushBack(Edge*);
-	void popFront();
 	void popBack();
 
-	void insertValueOnIndex(int, Edge*);
 	void deleteValueFromIndex(int);
 	void replaceValueOnIndex(int, Edge*);
 

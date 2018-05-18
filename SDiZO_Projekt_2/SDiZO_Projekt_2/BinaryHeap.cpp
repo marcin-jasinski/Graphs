@@ -13,7 +13,10 @@ BinaryHeap::BinaryHeap()
 }
 
 // default destructor
-BinaryHeap::~BinaryHeap() {}
+BinaryHeap::~BinaryHeap()
+{
+	delete[] heapElements;
+}
 
 // returns current size (number of heap elements)
 int BinaryHeap::getSize()
@@ -94,6 +97,8 @@ void BinaryHeap::heapFix_UP(int startIndex)
 		Edge* tempHold = heapElements->get(startIndex); // temporary holding parent element
 		heapElements->replaceValueOnIndex(startIndex, heapElements->get(parent(startIndex)));
 		heapElements->replaceValueOnIndex(parent(startIndex), tempHold);
+		delete tempHold;
+
 		heapFix_UP(parent(startIndex));
 	}
 }
@@ -119,6 +124,8 @@ void BinaryHeap::heapFix_DOWN(int startIndex)
 		Edge* temp = heapElements->get(startIndex);	// temporary holding parent element
 		heapElements->replaceValueOnIndex(startIndex, heapElements->get(first_child));
 		heapElements->replaceValueOnIndex(first_child, temp);
+		delete temp;
+
 		heapFix_DOWN(first_child);
 	}
 }

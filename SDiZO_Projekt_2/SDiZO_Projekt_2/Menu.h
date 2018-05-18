@@ -6,5 +6,7 @@ public:
 	~Menu();
 	
 	void showMainMenu();
+
+	void generateRandomData(int, int);
 };
 

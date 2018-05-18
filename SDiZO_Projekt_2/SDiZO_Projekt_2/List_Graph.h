@@ -1,5 +1,6 @@
 #pragma once
 #include "Node.h"
+#include <string>
 
 class List_Graph
 {
@@ -13,7 +14,7 @@ public:
 	List_Graph();
 	~List_Graph();
 
-	void readFromFile();
+	void readFromFile(std::string);
 	void createRandom();
 
 	Node* getNeighboursList(int);

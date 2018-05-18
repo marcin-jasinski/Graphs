@@ -14,9 +14,11 @@ List_Graph::List_Graph()
 
 List_Graph::~List_Graph()
 {
+	for (int i = 0; i < vertex; i++) delete adjacencyList[i];
+	delete[] adjacencyList;
 }
 
-void List_Graph::readFromFile()
+void List_Graph::readFromFile(std::string type)
 {
 	std::fstream file;
 	file.open("Dane.txt", std::ios::in);
@@ -42,11 +44,14 @@ void List_Graph::readFromFile()
 			node->next = adjacencyList[startVertex];
 			adjacencyList[startVertex] = node;
 
-			node = new Node();
-			node->vertex = startVertex;
-			node->weight = weight;
-			node->next = adjacencyList[endVertex];
-			adjacencyList[endVertex] = node;
+			if (type == "nieskierowany")
+			{
+				node = new Node();
+				node->vertex = startVertex;
+				node->weight = weight;
+				node->next = adjacencyList[endVertex];
+				adjacencyList[endVertex] = node;
+			}
 		}
 
 		file.close();
@@ -91,21 +96,22 @@ void List_Graph::createRandom()
 		node->weight = weight;
 		node->next = adjacencyList[endVertex];
 		adjacencyList[endVertex] = node;
+
 	}
 }
 
 void List_Graph::print()
 {
-
 	Node* node;
 
-	std::cout << "List representation:" << std::endl;
+	std::cout << "\nList representation:" << std::endl;
 	std::cout << std::endl;
 
 	for (int i = 0; i < vertex; i++)
 	{
 		std::cout << "[" << i << "] =";
 		node = adjacencyList[i];
+
 		while (node)
 		{
 			std::cout << std::setw(3) << node->vertex;
@@ -124,8 +130,8 @@ void List_Graph::Prims_algorithm()
 {
 	BinaryHeap queue = BinaryHeap();
 	Array primsEdges = Array();
-	Edge* edge;
-	Node* node;
+	Edge* edge = nullptr;
+	Node* node = nullptr;
 	bool* visited = new bool[vertex];	// tablica z informacj¹, czy dany wierzcho³ek zosta³ odwiedzony
 
 	visited[0] = true;	// odwiedzamy od razu pierwszy wierzcho³ek
@@ -180,5 +186,9 @@ void List_Graph::Prims_algorithm()
 		std::cout << "Edge " << i << " -> " << primsEdges[i]->startVertex << " " << primsEdges[i]->endVertex << " weight: " << primsEdges[i]->weight << std::endl;
 		totalCost += primsEdges[i]->weight;
 	}
-	std::cout << "\nTotal cost: " << totalCost << std::endl;
+	std::cout << "\nTotal cost: " << totalCost << std::endl;;
+
+	delete edge;
+	delete node;
+	delete[] visited;
 }

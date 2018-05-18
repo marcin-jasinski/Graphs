@@ -20,4 +20,5 @@ Node::Node(Node* _rightPtrArg, int endVertex, int edgeWeight)
 // destructor sets current node neighbours to point at each other (so as if to "bypass" current node)
 Node::~Node()
 {
+	delete next;
 }
