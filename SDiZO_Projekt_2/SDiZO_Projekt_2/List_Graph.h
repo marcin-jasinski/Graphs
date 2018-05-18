@@ -16,7 +16,8 @@ public:
 	void readFromFile();
 	void createRandom();
 
-	//void Prims_algorithm();
+	Node* getNeighboursList(int);
+	void Prims_algorithm();
 
 	void print();
 };
