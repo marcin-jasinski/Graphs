@@ -17,5 +17,7 @@ Edge::Edge(int s, int e, int w)
 
 Edge::~Edge()
 {
-
+	this->startVertex = NULL;
+	this->endVertex = NULL;
+	this->weight = NULL;
 }

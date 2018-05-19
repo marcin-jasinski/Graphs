@@ -7,7 +7,7 @@
 class BinaryHeap
 {
 private:
-	// using alredy existing Array class with all its functionality 
+	// using alredy existing Array class
 	Array* heapElements;
 
 	int get_left_child(int);

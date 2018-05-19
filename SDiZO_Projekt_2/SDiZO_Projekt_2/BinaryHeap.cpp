@@ -9,13 +9,13 @@
 // no need to pre-initialize elements array
 BinaryHeap::BinaryHeap()
 {
-	this->heapElements = new Array();
+	heapElements = new Array();
 }
 
 // default destructor
 BinaryHeap::~BinaryHeap()
 {
-	delete[] heapElements;
+	delete heapElements;
 }
 
 // returns current size (number of heap elements)
@@ -29,7 +29,7 @@ int BinaryHeap::getSize()
 void BinaryHeap::addNewElement(Edge* element)
 {
 	heapElements->pushBack(element);
-	heapFix_UP(heapElements->getSize() - 1);
+	heapFix_UP(heapElements->getSize()-1);
 }
 
 // deleting root element from the heap
@@ -59,7 +59,7 @@ Edge* BinaryHeap::getRoot()
 	else return heapElements->get(0);
 }
 
-Edge * BinaryHeap::getFromIndex(int index)
+Edge* BinaryHeap::getFromIndex(int index)
 {
 	return heapElements->get(index);
 }
@@ -97,8 +97,6 @@ void BinaryHeap::heapFix_UP(int startIndex)
 		Edge* tempHold = heapElements->get(startIndex); // temporary holding parent element
 		heapElements->replaceValueOnIndex(startIndex, heapElements->get(parent(startIndex)));
 		heapElements->replaceValueOnIndex(parent(startIndex), tempHold);
-		delete tempHold;
-
 		heapFix_UP(parent(startIndex));
 	}
 }
@@ -124,8 +122,6 @@ void BinaryHeap::heapFix_DOWN(int startIndex)
 		Edge* temp = heapElements->get(startIndex);	// temporary holding parent element
 		heapElements->replaceValueOnIndex(startIndex, heapElements->get(first_child));
 		heapElements->replaceValueOnIndex(first_child, temp);
-		delete temp;
-
 		heapFix_DOWN(first_child);
 	}
 }

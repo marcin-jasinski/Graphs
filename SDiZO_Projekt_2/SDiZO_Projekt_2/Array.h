@@ -4,8 +4,8 @@
 class Array
 {
 private:
-	Edge** _headPtr;	// pointer to dynamic array of integers
-	int arraySize;  // current number of elements in the array
+	Edge** _headPtr;	// dynamic array of pointers to Edge class objects
+	int arraySize;      // current number of elements in the array
 
 public:
 	Array();

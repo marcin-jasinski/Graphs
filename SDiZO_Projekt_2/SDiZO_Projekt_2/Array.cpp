@@ -1,5 +1,6 @@
 #include "stdafx.h"
 #include "Array.h"
+
 #include <fstream>
 #include <string>
 #include <iostream>
@@ -11,7 +12,7 @@
 Array::Array()
 {
 	this->arraySize = 0;
-	this->_headPtr = nullptr;
+	this->_headPtr = new Edge*[0];
 }
 
 // constructor creating an array of a specified size
@@ -26,7 +27,6 @@ Array::Array(int arraySize)
 // releasing memory 
 Array::~Array()
 {
-	for (int i = 0; i < arraySize; i++) delete _headPtr[i];
 	delete[] _headPtr;
 	this->arraySize = 0;
 }
@@ -47,9 +47,8 @@ void Array::pushBack(Edge* element)
 		arraySize++;
 	}
 	else {
-		Edge** _tempPtr = new Edge*[arraySize + 1];								// same thing as above, but this time element is inserted on the end of array
+		Edge** _tempPtr = new Edge*[arraySize + 1];						// same thing as above, but this time element is inserted on the end of array
 		memcpy(_tempPtr, _headPtr, arraySize * sizeof(Edge*));
-		for (int i = 0; i < arraySize; i++) delete _headPtr[i];
 		delete[] _headPtr;
 		_tempPtr[arraySize] = element;
 		_headPtr = _tempPtr;
@@ -89,7 +88,6 @@ void Array::deleteValueFromIndex(int index)
 	memcpy(_tempPtr, _headPtr, index * sizeof(Edge*));
 	arraySize--;
 	memcpy(_tempPtr + index, this->_headPtr + index + 1, (this->arraySize - index) * sizeof(Edge*));
-	for (int i = 0; i < arraySize; i++) delete _headPtr[i];
 	delete[] _headPtr;
 	_headPtr = _tempPtr;
 }
@@ -117,5 +115,3 @@ Edge* Array::operator[](int index) const
 {
 	return *(_headPtr + index);
 }
-
-  

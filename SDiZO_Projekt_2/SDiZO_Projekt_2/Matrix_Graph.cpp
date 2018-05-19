@@ -1,8 +1,8 @@
 ﻿#include "stdafx.h"
 #include "Matrix_Graph.h"
-#include "Edge.h"
 #include "BinaryHeap.h"
 #include "Array.h"
+#include "Edge.h"
 
 #include <iostream>
 #include <fstream>
@@ -18,7 +18,7 @@ Matrix_Graph::Matrix_Graph()
 
 Matrix_Graph::~Matrix_Graph()
 {
-	for (int i = 0; i < edges; i++) delete graphMatrix[i];
+	for (int i = 0; i < vertex; i++) delete graphMatrix[i];
 	delete[] graphMatrix;
 	delete[] edgeWeights;
 }
@@ -30,17 +30,17 @@ void Matrix_Graph::readFromFile(std::string type)
 
 	if (file.good() == true)
 	{
+		file >> edges >> vertex;
 		int i, j;
-		file >> edges >> vertex;	// odczyt liczby wierzchołków i krawędzi grafu
 
-		graphMatrix = new int*[edges];									// stworzenie dynamicznej tablicy dwuwymiarowej
-		for (i = 0; i < edges; i++) graphMatrix[i] = new int[vertex];	// o rozmiarach wierzchołki x krawędzie
+		graphMatrix = new int*[vertex];									
+		for (i = 0; i < vertex; i++) graphMatrix[i] = new int[edges];
 
-		edgeWeights = new int[edges];									// stworzenie tablicy z wagami krawędzi
+		edgeWeights = new int[edges];	
 
-		for (i = 0; i < edges; i++) {
-			for (j = 0; j < vertex; j++) {
-				graphMatrix[i][j] = 0;		// początkowe wyzerowanie całej zawartości macierzy grafu
+		for (i = 0; i < vertex; i++) {
+			for (j = 0; j < edges; j++) {
+				graphMatrix[i][j] = 0;		
 			}
 		}
 
@@ -48,10 +48,10 @@ void Matrix_Graph::readFromFile(std::string type)
 
 		for (i = 0; i < edges; i++)
 		{
-			file >> startVertex >> endVertex >> weight;		// odczytywanie kolejnych krawędzi i zapis do macierzy
-			graphMatrix[i][startVertex] = 1;
-			if(type == "nieskierowany") graphMatrix[i][endVertex] = 1;
-			else graphMatrix[i][endVertex] = -1;
+			file >> startVertex >> endVertex >> weight;		
+			graphMatrix[startVertex][i] = 1;
+			if (type == "nieskierowany") graphMatrix[endVertex][i] = 1;
+			else graphMatrix[endVertex][i] = -1;
 			edgeWeights[i] = weight;
 		}
 
@@ -60,7 +60,8 @@ void Matrix_Graph::readFromFile(std::string type)
 	else std::cout << "Error opening file!!!" << std::endl;
 }
 
-void Matrix_Graph::createRandom()
+
+void Matrix_Graph::createRandom(std::string type)
 {
 	std::cout << "Number of vertex: ";
 	std::cin >> vertex;
@@ -68,41 +69,40 @@ void Matrix_Graph::createRandom()
 	std::cin >> edges;
 
 	int i, j;
-	graphMatrix = new int*[vertex];									// stworzenie dynamicznej tablicy dwuwymiarowej
-	for (i = 0; i < vertex; i++) graphMatrix[i] = new int[vertex];	// o rozmiarach n x n
 
-	edgeWeights = new int[edges];									// stworzenie tablicy z wagami krawędzi
+	graphMatrix = new int*[vertex];
+	for (i = 0; i < vertex; i++) graphMatrix[i] = new int[edges];
+
+	edgeWeights = new int[edges];
 
 	for (i = 0; i < vertex; i++) {
 		for (j = 0; j < edges; j++) {
-			graphMatrix[i][j] = 0;		// początkowe wyzerowanie całej zawartości macierzy grafu
+			graphMatrix[i][j] = 0;
 		}
 	}
 
-	unsigned int startVertex, endVertex, weight;
+	int startVertex, endVertex, weight;
 
 	srand(time(NULL));
-	for (int i = 0; i < edges; i++)
+	for (i = 0; i < edges; i++)
 	{
 		startVertex = rand() % vertex;
-
 		do
 		{
 			endVertex = rand() % vertex;
 		} while (startVertex == endVertex);
 
+		weight = rand() % 1000;
 		graphMatrix[startVertex][i] = 1;
-		graphMatrix[endVertex][i] = 1;
-		weight = rand() % 10000;
+		if (type == "nieskierowany") graphMatrix[endVertex][i] = 1;
+		else graphMatrix[endVertex][i] = -1;
 		edgeWeights[i] = weight;
-
-		std::cout << startVertex << " " << endVertex << " -> " << weight << std::endl;
 	}
 }
 
-int Matrix_Graph::get(int row, int column)
+int Matrix_Graph::get(int vertex, int edge)
 {
-	return graphMatrix[row][column];
+	return graphMatrix[vertex][edge];
 }
 
 void Matrix_Graph::print()
@@ -112,8 +112,10 @@ void Matrix_Graph::print()
 	std::cout << "\nMatrix representation: " << std::endl;
 	std::cout << std::endl;
 	std::cout << std::setw(4) << " ";
+
 	for (i = 0; i < edges; i++) std::cout << std::setw(4) << i;
 	std::cout << std::endl << std::endl;
+
 	for (i = 0; i < vertex; i++)
 	{
 		std::cout << std::setw(4) << i;
@@ -133,7 +135,7 @@ void Matrix_Graph::Prims_algorithm()
 {
 	BinaryHeap queue = BinaryHeap();
 	Array primsEdges = Array();
-	Edge* edge = nullptr;
+	Edge* edge;
 	bool* visited = new bool[vertex];	// tablica z informacją, czy dany wierzchołek został odwiedzony
 	visited[0] = true;	// odwiedzamy od razu pierwszy wierzchołek
 	for (int i = 1; i < vertex; i++) visited[i] = false;	// a reszty na razie nie
@@ -193,11 +195,8 @@ void Matrix_Graph::Prims_algorithm()
 	std::cout << "\n\nMinimal Spanning Tree" << std::endl;
 	for (int i = 0; i < e; i++)
 	{
-		std::cout << "Edge " << i << " -> " << primsEdges[i]->startVertex << " " << primsEdges[i]->endVertex << " weight: " << primsEdges[i]->weight << std::endl;
-		totalCost += primsEdges[i]->weight;
+	std::cout << "Edge " << i << " -> " << primsEdges[i]->startVertex << " " << primsEdges[i]->endVertex << " weight: " << primsEdges[i]->weight << std::endl;
+	totalCost += primsEdges[i]->weight;
 	}
 	std::cout << "\nTotal cost: " << totalCost << std::endl;
-
-	delete edge;
-	delete[] visited;
 }
