@@ -18,10 +18,10 @@ List_Graph::~List_Graph()
 	delete[] adjacencyList;
 }
 
-void List_Graph::readFromFile(std::string type)
+void List_Graph::readFromFile(std::string sourceFile, std::string type)
 {
 	std::fstream file;
-	file.open("Dane.txt", std::ios::in);
+	file.open(sourceFile, std::ios::in);
 
 	if (file.good() == true)
 	{

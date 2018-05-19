@@ -14,7 +14,7 @@ public:
 	List_Graph();
 	~List_Graph();
 
-	void readFromFile(std::string);
+	void readFromFile(std::string, std::string);
 	void createRandom();
 
 	Node* getNeighboursList(int);

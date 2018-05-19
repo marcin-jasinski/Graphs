@@ -14,7 +14,7 @@ public:
 	Matrix_Graph();
 	~Matrix_Graph();
 
-	void readFromFile(std::string);
+	void readFromFile(std::string, std::string);
 	void createRandom(std::string);
 
 	int get(int, int);

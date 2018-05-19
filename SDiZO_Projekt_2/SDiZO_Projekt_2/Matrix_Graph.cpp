@@ -23,10 +23,10 @@ Matrix_Graph::~Matrix_Graph()
 	delete[] edgeWeights;
 }
 
-void Matrix_Graph::readFromFile(std::string type)
+void Matrix_Graph::readFromFile(std::string sourceFile, std::string type)
 {
 	std::fstream file;
-	file.open("Dane.txt", std::ios::in);
+	file.open(sourceFile, std::ios::in);
 
 	if (file.good() == true)
 	{
