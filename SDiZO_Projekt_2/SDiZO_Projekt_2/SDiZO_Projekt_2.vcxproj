@@ -148,6 +148,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="Array.h" />
+    <ClInclude Include="Benchmark_tests.h" />
     <ClInclude Include="BinaryHeap.h" />
     <ClInclude Include="DijikstraMenu.h" />
     <ClInclude Include="Edge.h" />
@@ -161,6 +162,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Array.cpp" />
+    <ClCompile Include="Benchmark_tests.cpp" />
     <ClCompile Include="BinaryHeap.cpp" />
     <ClCompile Include="DijikstraMenu.cpp" />
     <ClCompile Include="Edge.cpp" />

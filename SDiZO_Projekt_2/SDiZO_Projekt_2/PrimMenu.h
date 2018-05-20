@@ -18,6 +18,6 @@ public:
 	~PrimMenu();
 
 	void showPrimsMenu();
-	void generateRandomGraph(int, int);
+	void generateRandomGraph(int, double);
 };
 

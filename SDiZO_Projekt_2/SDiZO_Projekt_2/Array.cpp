@@ -60,7 +60,7 @@ void Array::pushBack(Edge* element)
 void Array::popBack()
 {
 	if (arraySize == 0) {
-		std::cout << "Array is empty." << std::endl;
+		//std::cout << "Array is empty." << std::endl;
 		return;
 	}
 
@@ -74,13 +74,13 @@ void Array::deleteValueFromIndex(int index)
 	// Index out of bounds 
 	if (index < 0 || index >= arraySize)
 	{
-		std::cout << "Index out of bounds." << std::endl;
+		//std::cout << "Index out of bounds." << std::endl;
 		return;
 	}
 
 	// there is no point of deleting a value from a non-existant array
 	if (arraySize == 0) {
-		std::cout << "Array is empty." << std::endl;
+		//std::cout << "Array is empty." << std::endl;
 		return;
 	}
 
@@ -98,7 +98,7 @@ void Array::replaceValueOnIndex(int index, Edge* element)
 	// Index out of bounds 
 	if (index < 0 || index >= arraySize)
 	{
-		std::cout << "Index out of bounds." << std::endl;
+		//std::cout << "Index out of bounds." << std::endl;
 		return;
 	}
 

@@ -21,7 +21,7 @@ void PrimMenu::showPrimsMenu()
 	std::cout << "\\>";
 	
 	int userChoice;
-	int vertices, edges, maxEdges;
+	int vertices;
 	double density;
 	std::cin >> userChoice;
 
@@ -43,11 +43,9 @@ void PrimMenu::showPrimsMenu()
 	case 2:
 		std::cout << "Number of vertices: ";
 		std::cin >> vertices;
-		std::cout << "Graph density (0.0 to 1.0) ";
+		std::cout << "Graph density (0.0 to 1.0) : ";
 		std::cin >> density;
-		maxEdges = vertices * (vertices - 1) / 2;
-		edges = density * maxEdges;
-		generateRandomGraph(vertices, edges);
+		generateRandomGraph(vertices, density);
 		mg.readFromFile("random_data.txt", "nieskierowany");
 		lg.readFromFile("random_data.txt", "nieskierowany");
 		mg.print();
@@ -65,8 +63,11 @@ void PrimMenu::showPrimsMenu()
 	}
 }
 
-void PrimMenu::generateRandomGraph(int vertex, int edges)
+void PrimMenu::generateRandomGraph(int vertex, double density)
 {
+	int maxEdges = vertex * (vertex - 1) / 2;
+	int edges = density * maxEdges;
+
 	std::fstream file;
 	file.open("random_data.txt", std::ios::out);
 

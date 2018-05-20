@@ -15,7 +15,6 @@ public:
 	~List_Graph();
 
 	void readFromFile(std::string, std::string);
-	void createRandom();
 
 	Node* getNeighboursList(int);
 	void Prims_algorithm();

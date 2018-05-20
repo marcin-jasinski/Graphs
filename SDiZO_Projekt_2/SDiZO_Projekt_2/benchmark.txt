@@ -1,0 +1,6 @@
+
+Prim's algorithm for matrix graph. Vertices: 50, density: 0.25
+Average time: 1.9978
+
+Prim's algorithm for list graph. Vertices: 50, density: 0.25
+Average time: 0.78763
