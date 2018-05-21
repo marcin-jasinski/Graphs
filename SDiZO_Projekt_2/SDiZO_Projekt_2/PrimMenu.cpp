@@ -15,8 +15,8 @@ PrimMenu::~PrimMenu()
 void PrimMenu::showPrimsMenu()
 {
 	system("cls");
-	std::cout << "1 - wczytanie z pliku." << std::endl;
-	std::cout << "2 - losowy graf" << std::endl;
+	std::cout << "1 - read from file." << std::endl;
+	std::cout << "2 - random graph" << std::endl;
 	std::cout << "\\>";
 	
 	int userChoice;
@@ -42,7 +42,7 @@ void PrimMenu::showPrimsMenu()
 	case 2:
 		std::cout << "Number of vertices: ";
 		std::cin >> vertices;
-		std::cout << "Graph density (0.0 to 1.0) : ";
+		std::cout << "Density : ";
 		std::cin >> density;
 		generateRandomGraph(vertices, density);
 		mg.readFromFile("random_data.txt", "nieskierowany");

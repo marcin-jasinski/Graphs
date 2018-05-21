@@ -152,17 +152,15 @@ void Matrix_Graph::Prims_algorithm()
 		v = edge->endVertex;
 	}
 
-	/*
 	int e = primsEdges.getSize();
 	int totalCost = 0;
-	std::cout << "\n\nMinimal Spanning Tree" << std::endl;
+	std::cout << "\n\nMinimal Spanning Tree for incidency matrix representation" << std::endl;
 	for (int i = 0; i < e; i++)
 	{
 	std::cout << "Edge " << i << " -> " << primsEdges[i]->startVertex << " " << primsEdges[i]->endVertex << " weight: " << primsEdges[i]->weight << std::endl;
 	totalCost += primsEdges[i]->weight;
 	}
 	std::cout << "\nTotal cost: " << totalCost << std::endl;
-	*/
 }
 
 void Matrix_Graph::Dijikstras_algorithm(int startVertex, int endVertex)
@@ -228,7 +226,6 @@ void Matrix_Graph::Dijikstras_algorithm(int startVertex, int endVertex)
 		unvisitedVertices--;
 	}
 
-	/*
 	if (d[endVertex] == INT32_MAX)
 	{
 		std::cout << "Shortes path from " << startVertex << " to " << endVertex << " does not exist" << std::endl;
@@ -237,12 +234,11 @@ void Matrix_Graph::Dijikstras_algorithm(int startVertex, int endVertex)
 
 	int e = dijikstrasEdges.getSize();
 	int currentVertex = endVertex;
-	std::cout << "\n\nShortest path: " << std::endl;
+	std::cout << "\n\nShortest path for incidency matrix representation " << std::endl;
 	while (currentVertex != -1)
 	{
 		std::cout << currentVertex << " <- ";
 		currentVertex = p[currentVertex];
 	}
 	std::cout << "\nTotal cost: " << d[endVertex] << std::endl;
-	*/
 }

@@ -20,10 +20,9 @@ Menu::~Menu()
 void Menu::showMainMenu()
 {
 	std::cout << "<=== BADANIE EFEKTYWNOŒCI ALGORYTMOW GRAFOWYCH ===>" << std::endl;
-	std::cout << "\nWybierz problem do rozwi¹zania: " << std::endl;
 	std::cout << "1 - algorytm Prima (MST)" << std::endl;
-	std::cout << "2 - algorytm Dijikstry" << std::endl;
-	std::cout << "3 - WYJSCIE" << std::endl;
+	std::cout << "2 - algorytm Dijkstry" << std::endl;
+	std::cout << "3 - Koniec" << std::endl;
 	std::cout << "//> ";
 
 	int userChoice;
@@ -40,7 +39,7 @@ void Menu::showMainMenu()
 		dm.showDijikstraMenu();
 		break;
 	case 3:
-		std::cout << "Exiting..." << std::endl;
+		std::cout << "Koniec..." << std::endl;
 		break;
 	default:
 		std::cout << "Wrong input." << std::endl;
