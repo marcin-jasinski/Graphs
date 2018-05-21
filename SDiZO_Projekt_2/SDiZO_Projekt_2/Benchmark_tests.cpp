@@ -1,7 +1,9 @@
 #include "stdafx.h"
 #include "Benchmark_tests.h"
+#include "Array.h"
 
 #include <iostream>
+#include <iomanip>
 #include <fstream>
 #include <ctime>
 #include <cstdlib>
@@ -9,7 +11,6 @@
 Benchmark_tests::Benchmark_tests()
 {
 }
-
 
 Benchmark_tests::~Benchmark_tests()
 {
@@ -29,6 +30,63 @@ double Benchmark_tests::GetCounter()
 	LARGE_INTEGER li;
 	QueryPerformanceCounter(&li);
 	return double(li.QuadPart - CounterStart) / PCFreq;
+}
+
+void Benchmark_tests::generateRandomGraph(int vertex, double density)
+{
+	int maxEdges = vertex * (vertex - 1) / 2;
+	int edges = density * maxEdges;
+
+	int** edgesMatrix = new int*[vertex];
+	for (int i = 0; i < vertex; i++) edgesMatrix[i] = new int[vertex];
+
+	for (int i = 0; i < vertex; i++)
+	{
+		for (int j = 0; j < vertex; j++) edgesMatrix[i][j] = INT32_MAX;
+	}
+
+	std::fstream file;
+	file.open("random_data.txt", std::ios::out);
+
+	if (file.good())
+	{
+		file << edges << " " << vertex << std::endl;
+
+		int startVertex, endVertex, weight;
+
+		srand(time(NULL));
+
+		for (int i = 0; i < vertex; i++)
+		{
+			if (i == 0) continue;
+			do
+			{
+				endVertex = rand() % i;
+			} while (endVertex == i);
+
+			weight = rand() % 10000;
+			edgesMatrix[i][endVertex] = weight;
+			edgesMatrix[endVertex][i] = weight;
+			file << i << " " << endVertex << " " << weight << std::endl;
+		}
+
+		for (int i = vertex; i <= edges; i++)
+		{
+			startVertex = rand() % vertex;
+			do
+			{
+				endVertex = rand() % vertex;
+			} while (endVertex == startVertex && (edgesMatrix[startVertex][endVertex] != INT32_MAX || edgesMatrix[endVertex][startVertex] != INT32_MAX));
+
+			weight = rand() % 10000;
+			edgesMatrix[startVertex][endVertex] = weight;
+			edgesMatrix[endVertex][startVertex] = weight;
+			file << startVertex << " " << endVertex << " " << weight << std::endl;
+		}
+
+		file.close();
+	}
+	else std::cout << "File acces denied!" << std::endl;
 }
 
 void Benchmark_tests::runTests(int vertex, double density)
@@ -99,50 +157,68 @@ void Benchmark_tests::runTests(int vertex, double density)
 	averageTime = totalTime / 100;
 	std::cout << "Average performance time: " << averageTime << std::endl;
 	file << "Average time: " << averageTime << std::endl;
-}
 
-void Benchmark_tests::generateRandomGraph(int vertex, double density)
-{
-	int maxEdges = vertex * (vertex - 1) / 2;
-	int edges = density * maxEdges;
-
-	std::fstream file;
-	file.open("random_data.txt", std::ios::out);
-
-	if (file.good())
+	system("cls");
+	file << "\nDijikstra's algorithm for matrix graph. Vertices: " << vertex << ", density: " << density << std::endl;
+	std::cout << "\nDijikstra's algorithm for matrix graph. Vertices: " << vertex << ", density: " << density << std::endl;
+	totalTime = 0;
+	averageTime = 0;
+	for (int i = 1; i <= 100; i++)
 	{
-		file << edges << " " << vertex << std::endl;
-
-		int startVertex, endVertex, weight;
-
-		srand(time(NULL));
-
-		for (int i = 0; i < vertex; i++)
+		generateRandomGraph(vertex, density);
+		mg.readFromFile("random_data.txt", "skierowany");
+		int startingVertex = rand() % vertex;
+		int endVertex;
+		do
 		{
-			do
-			{
-				endVertex = rand() % vertex;
-			} while (endVertex == i);
+			endVertex = rand() % vertex;
+		} while (endVertex == startingVertex);
 
-			weight = rand() % 10000;
+		StartCounter();
+		mg.Dijikstras_algorithm(startingVertex, endVertex);
+		endTime = GetCounter();
 
-			file << i << " " << endVertex << " " << weight << std::endl;
-		}
+		std::cout << i << ") -> " << endTime << std::endl;
+		//file << endTime << std::endl;
 
-		for (int i = vertex; i < edges; i++)
-		{
-			startVertex = rand() % vertex;
-			do
-			{
-				endVertex = rand() % vertex;
-			} while (endVertex == startVertex);
+		totalTime += endTime;
 
-			weight = rand() % 10000;
-
-			file << startVertex << " " << endVertex << " " << weight << std::endl;
-		}
-
-		file.close();
+		mg.~Matrix_Graph();
 	}
-	else std::cout << "File acces denied!" << std::endl;
+	averageTime = totalTime / 100;
+	std::cout << "Average performance time: " << averageTime << std::endl;
+	file << "Average time: " << averageTime << std::endl;
+
+	system("cls");
+	file << "\nDijikstra's algorithm for list graph. Vertices: " << vertex << ", density: " << density << std::endl;
+	std::cout << "\nDijikstra's algorithm for list graph. Vertices: " << vertex << ", density: " << density << std::endl;
+	totalTime = 0;
+	averageTime = 0;
+	for (int i = 1; i <= 100; i++)
+	{
+		generateRandomGraph(vertex, density);
+		lg.readFromFile("random_data.txt", "skierowany");
+		int startingVertex = rand() % vertex;
+		int endVertex;
+		do
+		{
+			endVertex = rand() % vertex;
+		} while (endVertex == startingVertex);
+
+		StartCounter();
+		lg.Dijikstras_algorithm(startingVertex, endVertex);
+		endTime = GetCounter();
+
+		std::cout << i << ") -> " << endTime << std::endl;
+		//file << endTime << std::endl;
+
+		totalTime += endTime;
+
+		lg.~List_Graph();
+	}
+	averageTime = totalTime / 100;
+	std::cout << "Average performance time: " << averageTime << std::endl;
+	file << "Average time: " << averageTime << std::endl;
 }
+
+

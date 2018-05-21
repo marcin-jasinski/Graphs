@@ -20,7 +20,7 @@ public:
 	void StartCounter();
 	double GetCounter();
 
-	void runTests(int, double);
 	void generateRandomGraph(int, double);
+	void runTests(int, double);
 };
 

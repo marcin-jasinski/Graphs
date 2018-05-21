@@ -155,3 +155,81 @@ void List_Graph::Prims_algorithm()
 	delete node;
 	delete[] visited;
 }
+
+void List_Graph::Dijikstras_algorithm(int startVertex, int endVertex)
+{
+	int* d = new int[vertex]; // tablica kosztów dojœcia od startVertex do d[i]
+	int* p = new int[vertex]; // tablica poprzedników na œcie¿ce
+
+	for (int i = 0; i < vertex; i++)
+	{
+		d[i] = INT32_MAX;	// tablica kosztów unstawiona na najwiêksz¹ wartoœæ ("nieskoñczonoœæ")
+		p[i] = -1;		// NULL oznacza brak poprzednika na najkrótszej œcie¿ce
+	}
+
+	d[startVertex] = 0;		// koszt odwiedzenia samego siebie równy zero
+
+	BinaryHeap queue = BinaryHeap();
+	queue.addNewElement(new Edge(-1, startVertex, d[startVertex]));
+
+	Array dijikstrasEdges = Array();
+	Edge* edge;
+	Node* node = nullptr;
+
+	int unvisitedVertices = vertex - 1;
+	int v, v2;
+
+	while (unvisitedVertices > 0)
+	{
+		v = queue.getRoot()->endVertex;
+		if (v == endVertex) break;
+		queue.deleteRoot();
+		//std::cout << "\n==> Current vertex: " << v << std::endl;
+
+		node = getNeighboursList(v);
+		while (node)
+		{
+			v2 = node->vertex;
+			if (v2 != v && v2 != startVertex)
+			{
+				//std::cout << "New edge found! -> " << v << " " << node->vertex << " weight: " << node->weight << std::endl;
+				int currentCost = d[v] + node->weight;
+				if (currentCost < d[v2])
+				{
+					d[v2] = currentCost;
+					p[v2] = v;
+				}
+				queue.addNewElement(new Edge(v, node->vertex, d[v2]));
+			}
+			node = node->next;
+		}
+
+		/*
+		std::cout << "\nList of edges currently in queue: " << std::endl;
+		for (int x = 0; x < queue.getSize(); x++)
+		{
+			std::cout << queue.getFromIndex(x)->startVertex << " " << queue.getFromIndex(x)->endVertex << " weight: " << queue.getFromIndex(x)->weight << std::endl;
+		}
+		*/
+
+		unvisitedVertices--;
+	}
+
+	/*
+	if (d[endVertex] == INT32_MAX)
+	{
+		std::cout << "Shortes path from " << startVertex << " to " << endVertex << " does not exist" << std::endl;
+		return;
+	}
+
+	int e = dijikstrasEdges.getSize();
+	int currentVertex = endVertex;
+	std::cout << "\n\nShortest path: " << std::endl;
+	while (currentVertex != -1)
+	{
+		std::cout << currentVertex << " <- ";
+		currentVertex = p[currentVertex];
+	}
+	std::cout << "\nTotal cost: " << d[endVertex] << std::endl;
+	*/
+}

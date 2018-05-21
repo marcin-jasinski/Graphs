@@ -5,7 +5,7 @@ class Array
 {
 private:
 	Edge** _headPtr;	// dynamic array of pointers to Edge class objects
-	int arraySize;      // current number of elements in the array
+	size_t arraySize;      // current number of elements in the array
 
 public:
 	Array();

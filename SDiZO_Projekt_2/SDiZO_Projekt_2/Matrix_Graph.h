@@ -20,5 +20,6 @@ public:
 	void print();
 
 	void Prims_algorithm();
+	void Dijikstras_algorithm(int, int);
 };
 

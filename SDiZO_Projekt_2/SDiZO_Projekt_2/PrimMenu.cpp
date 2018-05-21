@@ -15,7 +15,6 @@ PrimMenu::~PrimMenu()
 void PrimMenu::showPrimsMenu()
 {
 	system("cls");
-	std::cout << "Wybierz Ÿród³o danych: " << std::endl;
 	std::cout << "1 - wczytanie z pliku." << std::endl;
 	std::cout << "2 - losowy graf" << std::endl;
 	std::cout << "\\>";
@@ -68,11 +67,20 @@ void PrimMenu::generateRandomGraph(int vertex, double density)
 	int maxEdges = vertex * (vertex - 1) / 2;
 	int edges = density * maxEdges;
 
+	int** edgesMatrix = new int*[vertex];
+	for (int i = 0; i < vertex; i++) edgesMatrix[i] = new int[vertex];
+
+	for (int i = 0; i < vertex; i++)
+	{
+		for (int j = 0; j < vertex; j++) edgesMatrix[i][j] = INT32_MAX;
+	}
+
 	std::fstream file;
 	file.open("random_data.txt", std::ios::out);
 
 	if (file.good())
 	{
+
 		file << edges << " " << vertex << std::endl;
 
 		int startVertex, endVertex, weight;
@@ -81,31 +89,33 @@ void PrimMenu::generateRandomGraph(int vertex, double density)
 
 		for (int i = 0; i < vertex; i++)
 		{
+			if (i == 0) continue;
 			do
 			{
-				endVertex = rand() % vertex;
+				endVertex = rand() % i;
 			} while (endVertex == i);
 
 			weight = rand() % 10000;
-
+			edgesMatrix[i][endVertex] = weight;
+			edgesMatrix[endVertex][i] = weight;
 			file << i << " " << endVertex << " " << weight << std::endl;
 		}
 
-		for (int i = vertex; i < edges; i++)
+		for (int i = vertex; i <= edges; i++)
 		{
 			startVertex = rand() % vertex;
 			do
 			{
 				endVertex = rand() % vertex;
-			} while (endVertex == startVertex);
+			} while (endVertex == startVertex || edgesMatrix[startVertex][endVertex] != INT32_MAX || edgesMatrix[endVertex][startVertex] != INT32_MAX);
 
 			weight = rand() % 10000;
-
+			edgesMatrix[startVertex][endVertex] = weight;
+			edgesMatrix[endVertex][startVertex] = weight;
 			file << startVertex << " " << endVertex << " " << weight << std::endl;
 		}
 
 		file.close();
-		std::cout << "Done." << std::endl;
 	}
 	else std::cout << "File acces denied!" << std::endl;
 }

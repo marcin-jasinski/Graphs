@@ -17,7 +17,9 @@ public:
 	void readFromFile(std::string, std::string);
 
 	Node* getNeighboursList(int);
+
 	void Prims_algorithm();
+	void Dijikstras_algorithm(int, int);
 
 	void print();
 };

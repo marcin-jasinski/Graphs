@@ -16,5 +16,6 @@ public:
 	~DijikstraMenu();
 
 	void showDijikstraMenu();
+	void generateRandomGraph(int, double);
 };
 

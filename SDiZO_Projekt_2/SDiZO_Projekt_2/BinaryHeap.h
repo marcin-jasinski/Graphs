@@ -6,6 +6,9 @@
 
 class BinaryHeap
 {
+	friend class Matrix_Graph;
+	friend class List_Graph;
+
 private:
 	// using alredy existing Array class
 	Array* heapElements;

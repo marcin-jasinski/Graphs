@@ -86,7 +86,7 @@ void Matrix_Graph::print()
 	std::cout << "\nWeights of edges: " << std::endl;
 	for (int i = 0; i < edges; i++)
 	{
-		std::cout << std::setw(4) << "[" << edgeWeights[i] << "]";
+		std::cout << std::setw(2) << "[" << edgeWeights[i] << "]";
 	}
 	std::cout << std::endl;
 }
@@ -162,5 +162,87 @@ void Matrix_Graph::Prims_algorithm()
 	totalCost += primsEdges[i]->weight;
 	}
 	std::cout << "\nTotal cost: " << totalCost << std::endl;
+	*/
+}
+
+void Matrix_Graph::Dijikstras_algorithm(int startVertex, int endVertex)
+{
+	int* d = new int[vertex]; // tablica kosztów dojścia od startVertex do d[i]
+	int* p = new int[vertex]; // tablica poprzedników na ścieżce
+
+	for (int i = 0; i < vertex; i++)
+	{
+		d[i] = INT32_MAX;	// tablica kosztów unstawiona na największą wartość ("nieskończoność")
+		p[i] = -1;		// NULL oznacza brak poprzednika na najkrótszej ścieżce
+	}
+		
+	d[startVertex] = 0;		// koszt odwiedzenia samego siebie równy zero
+
+	BinaryHeap queue = BinaryHeap();
+	queue.addNewElement(new Edge(-1, startVertex, d[startVertex]));
+
+	Array dijikstrasEdges = Array();
+	Edge* edge;
+
+
+	int unvisitedVertices = vertex - 1;
+	int v;
+
+	while (unvisitedVertices > 0)
+	{
+		v = queue.getRoot()->endVertex;
+		if (v == endVertex) break;
+		queue.deleteRoot();
+		//std::cout << "\n==> Current vertex: " << v << std::endl;
+
+		for (int e = 0; e < edges; e++) 
+		{
+			if (get(v, e) == 1) 
+			{
+				for (int v2 = 0; v2 < vertex; v2++) 
+				{
+					if (get(v2, e) == -1 && v2 != startVertex) 
+					{
+						//std::cout << "New edge found! -> " << v << " " << v2 << " weight: " << edgeWeights[e] << std::endl;
+						int currentCost = d[v] + edgeWeights[e];
+						if (currentCost < d[v2])
+						{
+							d[v2] = currentCost;
+							p[v2] = v;
+						}
+						queue.addNewElement(new Edge(v, v2, d[v2]));
+						break;
+					}
+				}
+			}
+		}
+		
+		/*
+		std::cout << "\nList of edges currently in queue: " << std::endl;	
+		for (int x = 0; x < queue.getSize(); x++)
+		{
+		std::cout << queue.getFromIndex(x)->startVertex << " " << queue.getFromIndex(x)->endVertex << " weight: " << queue.getFromIndex(x)->weight << std::endl;
+		}
+		*/
+
+		unvisitedVertices--;
+	}
+
+	/*
+	if (d[endVertex] == INT32_MAX)
+	{
+		std::cout << "Shortes path from " << startVertex << " to " << endVertex << " does not exist" << std::endl;
+		return;
+	}
+
+	int e = dijikstrasEdges.getSize();
+	int currentVertex = endVertex;
+	std::cout << "\n\nShortest path: " << std::endl;
+	while (currentVertex != -1)
+	{
+		std::cout << currentVertex << " <- ";
+		currentVertex = p[currentVertex];
+	}
+	std::cout << "\nTotal cost: " << d[endVertex] << std::endl;
 	*/
 }
