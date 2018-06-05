@@ -33,12 +33,16 @@ void DijikstraMenu::showDijikstraMenu()
 		std::cout << "Done reading from file." << std::endl;
 		mg.print();
 		lg.print();
-		std::cout << "\nStarting vertex: ";
-		std::cin >> startingVertex;
-		std::cout << "Ending vertex: ";
-		std::cin >> endingVertex;
-		mg.Dijikstras_algorithm(startingVertex, endingVertex);
-		lg.Dijikstras_algorithm(startingVertex, endingVertex);
+		while (true)
+		{
+			std::cout << "\nStarting vertex: ";
+			std::cin >> startingVertex;
+			if (startingVertex == -1) break;
+			std::cout << "Ending vertex: ";
+			std::cin >> endingVertex;
+			mg.Dijikstras_algorithm(startingVertex, endingVertex);
+			lg.Dijikstras_algorithm(startingVertex, endingVertex);
+		}
 		break;
 
 	case 2:
@@ -51,12 +55,16 @@ void DijikstraMenu::showDijikstraMenu()
 		lg.readFromFile("random_data.txt", "skierowany");
 		mg.print();
 		lg.print();
-		std::cout << "\nStarting vertex: ";
-		std::cin >> startingVertex;
-		std::cout << "Ending vertex: ";
-		std::cin >> endingVertex;
-		mg.Dijikstras_algorithm(startingVertex, endingVertex);
-		lg.Dijikstras_algorithm(startingVertex, endingVertex);
+		while (true)
+		{
+			std::cout << "\nStarting vertex: ";
+			std::cin >> startingVertex;
+			if (startingVertex == -1) break;
+			std::cout << "Ending vertex: ";
+			std::cin >> endingVertex;
+			mg.Dijikstras_algorithm(startingVertex, endingVertex);
+			lg.Dijikstras_algorithm(startingVertex, endingVertex);
+		}
 		break;
 
 	default:
@@ -69,6 +77,12 @@ void DijikstraMenu::generateRandomGraph(int vertex, double density)
 {
 	int maxEdges = vertex * (vertex - 1) / 2;
 	int edges = density * maxEdges;
+
+	if (edges < vertex - 1)
+	{
+		std::cout << "Przy tej gestosci graf moze nie byc spojny!" << std::endl;
+		return;
+	}
 
 	int** edgesMatrix = new int*[vertex];
 	for (int i = 0; i < vertex; i++) edgesMatrix[i] = new int[vertex];
@@ -98,7 +112,7 @@ void DijikstraMenu::generateRandomGraph(int vertex, double density)
 				endVertex = rand() % i;
 			} while (endVertex == i);
 
-			weight = rand() % 10000;
+			weight = rand() % 100000;
 			edgesMatrix[i][endVertex] = weight;
 			edgesMatrix[endVertex][i] = weight;
 			file << i << " " << endVertex << " " << weight << std::endl;
@@ -112,7 +126,7 @@ void DijikstraMenu::generateRandomGraph(int vertex, double density)
 				endVertex = rand() % vertex;
 			} while (endVertex == startVertex || edgesMatrix[startVertex][endVertex] != INT32_MAX || edgesMatrix[endVertex][startVertex] != INT32_MAX);
 
-			weight = rand() % 10000;
+			weight = rand() % 100000;
 			edgesMatrix[startVertex][endVertex] = weight;
 			edgesMatrix[endVertex][startVertex] = weight;
 			file << startVertex << " " << endVertex << " " << weight << std::endl;

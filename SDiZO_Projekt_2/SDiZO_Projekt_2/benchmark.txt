@@ -238,3 +238,316 @@ Average time: 354.185
 
 Dijikstra's algorithm for list graph. Vertices: 150, density: 0.99
 Average time: 305.714
+
+Prim's algorithm for matrix graph. Vertices: 50, density: 0.25
+
+Prim's algorithm for matrix graph. Vertices: 50, density: 0.25
+Average time: 2.00335
+
+Prim's algorithm for list graph. Vertices: 50, density: 0.25
+Average time: 0.783231
+
+Dijikstra's algorithm for matrix graph. Vertices: 50, density: 0.25
+Average time: 0.719121
+
+Dijikstra's algorithm for list graph. Vertices: 50, density: 0.25
+Average time: 0.258979
+
+Prim's algorithm for matrix graph. Vertices: 50, density: 0.5
+Average time: 3.17113
+
+Prim's algorithm for list graph. Vertices: 50, density: 0.5
+Average time: 1.39673
+
+Dijikstra's algorithm for matrix graph. Vertices: 50, density: 0.5
+Average time: 2.83929
+
+Dijikstra's algorithm for list graph. Vertices: 50, density: 0.5
+Average time: 0.941456
+
+Prim's algorithm for matrix graph. Vertices: 50, density: 0.75
+Average time: 4.67096
+
+Prim's algorithm for list graph. Vertices: 50, density: 0.75
+Average time: 1.78569
+
+Dijikstra's algorithm for matrix graph. Vertices: 50, density: 0.75
+Average time: 3.97297
+
+Dijikstra's algorithm for list graph. Vertices: 50, density: 0.75
+Average time: 2.0323
+
+Prim's algorithm for matrix graph. Vertices: 50, density: 0.99
+Average time: 6.31597
+
+Prim's algorithm for list graph. Vertices: 50, density: 0.99
+Average time: 2.37355
+
+Dijikstra's algorithm for matrix graph. Vertices: 50, density: 0.99
+Average time: 0.846124
+
+Dijikstra's algorithm for list graph. Vertices: 50, density: 0.99
+Average time: 1.6069
+
+Prim's algorithm for matrix graph. Vertices: 50, density: 0.25
+Average time: 1.67768
+
+Prim's algorithm for list graph. Vertices: 50, density: 0.25
+Average time: 0.728138
+
+Dijikstra's algorithm for matrix graph. Vertices: 50, density: 0.25
+Average time: 0.517825
+
+Dijikstra's algorithm for list graph. Vertices: 50, density: 0.25
+Average time: 0.4036
+
+Prim's algorithm for matrix graph. Vertices: 50, density: 0.5
+Average time: 3.17061
+
+Prim's algorithm for list graph. Vertices: 50, density: 0.5
+Average time: 1.33979
+
+Dijikstra's algorithm for matrix graph. Vertices: 50, density: 0.5
+Average time: 2.62727
+
+Dijikstra's algorithm for list graph. Vertices: 50, density: 0.5
+Average time: 1.01135
+
+Prim's algorithm for matrix graph. Vertices: 50, density: 0.75
+Average time: 4.83855
+
+Prim's algorithm for list graph. Vertices: 50, density: 0.75
+Average time: 1.82556
+
+Dijikstra's algorithm for matrix graph. Vertices: 50, density: 0.75
+Average time: 2.0776
+
+Dijikstra's algorithm for list graph. Vertices: 50, density: 0.75
+Average time: 1.68038
+
+Prim's algorithm for matrix graph. Vertices: 50, density: 0.99
+Average time: 6.44154
+
+Prim's algorithm for list graph. Vertices: 50, density: 0.99
+Average time: 2.3601
+
+Dijikstra's algorithm for matrix graph. Vertices: 50, density: 0.99
+Average time: 4.31816
+
+Dijikstra's algorithm for list graph. Vertices: 50, density: 0.99
+Average time: 1.19588
+
+Prim's algorithm for matrix graph. Vertices: 50, density: 0.25
+Average time: 0.252288
+
+Prim's algorithm for list graph. Vertices: 50, density: 0.25
+Average time: 0.175163
+
+Dijikstra's algorithm for matrix graph. Vertices: 50, density: 0.25
+Average time: 0.0616174
+
+Dijikstra's algorithm for list graph. Vertices: 50, density: 0.25
+Average time: 0.0513585
+
+Prim's algorithm for matrix graph. Vertices: 50, density: 0.5
+Average time: 0.451375
+
+Prim's algorithm for list graph. Vertices: 50, density: 0.5
+Average time: 0.333407
+
+Dijikstra's algorithm for matrix graph. Vertices: 50, density: 0.5
+Average time: 0.0942441
+
+Dijikstra's algorithm for list graph. Vertices: 50, density: 0.5
+Average time: 0.115347
+
+Prim's algorithm for matrix graph. Vertices: 50, density: 0.75
+Average time: 0.727692
+
+Prim's algorithm for list graph. Vertices: 50, density: 0.75
+Average time: 0.512868
+
+Dijikstra's algorithm for matrix graph. Vertices: 50, density: 0.75
+Average time: 0.388108
+
+Dijikstra's algorithm for list graph. Vertices: 50, density: 0.75
+Average time: 0.197743
+
+Prim's algorithm for matrix graph. Vertices: 50, density: 0.99
+Average time: 1.0055
+
+Prim's algorithm for list graph. Vertices: 50, density: 0.99
+Average time: 0.673706
+
+Dijikstra's algorithm for matrix graph. Vertices: 50, density: 0.99
+Average time: 0.409652
+
+Dijikstra's algorithm for list graph. Vertices: 50, density: 0.99
+Average time: 0.281275
+
+Prim's algorithm for matrix graph. Vertices: 75, density: 0.25
+Average time: 0.650469
+
+Prim's algorithm for list graph. Vertices: 75, density: 0.25
+Average time: 0.385113
+
+Dijikstra's algorithm for matrix graph. Vertices: 75, density: 0.25
+Average time: 0.286104
+
+Dijikstra's algorithm for list graph. Vertices: 75, density: 0.25
+Average time: 0.224419
+
+Prim's algorithm for matrix graph. Vertices: 75, density: 0.5
+Average time: 1.64615
+
+Prim's algorithm for list graph. Vertices: 75, density: 0.5
+Average time: 0.858437
+
+Dijikstra's algorithm for matrix graph. Vertices: 75, density: 0.5
+Average time: 0.381338
+
+Dijikstra's algorithm for list graph. Vertices: 75, density: 0.5
+Average time: 0.387564
+
+Prim's algorithm for matrix graph. Vertices: 75, density: 0.75
+Average time: 2.25196
+
+Prim's algorithm for list graph. Vertices: 75, density: 0.75
+Average time: 1.56091
+
+Dijikstra's algorithm for matrix graph. Vertices: 75, density: 0.75
+Average time: 1.15727
+
+Dijikstra's algorithm for list graph. Vertices: 75, density: 0.75
+Average time: 0.590774
+
+Prim's algorithm for matrix graph. Vertices: 75, density: 0.99
+Average time: 3.29094
+
+Prim's algorithm for list graph. Vertices: 75, density: 0.99
+Average time: 2.13109
+
+Dijikstra's algorithm for matrix graph. Vertices: 75, density: 0.99
+Average time: 0.89564
+
+Dijikstra's algorithm for list graph. Vertices: 75, density: 0.99
+Average time: 0.833347
+
+Prim's algorithm for matrix graph. Vertices: 100, density: 0.25
+Average time: 1.36515
+
+Prim's algorithm for list graph. Vertices: 100, density: 0.25
+Average time: 0.734194
+
+Dijikstra's algorithm for matrix graph. Vertices: 100, density: 0.25
+Average time: 0.350451
+
+Dijikstra's algorithm for list graph. Vertices: 100, density: 0.25
+Average time: 0.401391
+
+Prim's algorithm for matrix graph. Vertices: 100, density: 0.5
+Average time: 3.25947
+
+Prim's algorithm for list graph. Vertices: 100, density: 0.5
+Average time: 1.85014
+
+Dijikstra's algorithm for matrix graph. Vertices: 100, density: 0.5
+Average time: 1.23228
+
+Dijikstra's algorithm for list graph. Vertices: 100, density: 0.5
+Average time: 0.862685
+
+Prim's algorithm for matrix graph. Vertices: 100, density: 0.75
+Average time: 6.29332
+
+Prim's algorithm for list graph. Vertices: 100, density: 0.75
+Average time: 3.82007
+
+Dijikstra's algorithm for matrix graph. Vertices: 100, density: 0.75
+Average time: 2.07472
+
+Dijikstra's algorithm for list graph. Vertices: 100, density: 0.75
+Average time: 0.40397
+
+Prim's algorithm for matrix graph. Vertices: 100, density: 0.99
+Average time: 11.6199
+
+Prim's algorithm for list graph. Vertices: 100, density: 0.99
+Average time: 13.9016
+
+Dijikstra's algorithm for matrix graph. Vertices: 100, density: 0.99
+Average time: 3.28991
+
+Dijikstra's algorithm for list graph. Vertices: 100, density: 0.99
+Average time: 1.28801
+
+Prim's algorithm for matrix graph. Vertices: 125, density: 0.25
+Average time: 2.66566
+
+Prim's algorithm for list graph. Vertices: 125, density: 0.25
+Average time: 1.12911
+
+Dijikstra's algorithm for matrix graph. Vertices: 125, density: 0.25
+Average time: 0.891415
+
+Dijikstra's algorithm for list graph. Vertices: 125, density: 0.25
+Average time: 0.88435
+
+Prim's algorithm for matrix graph. Vertices: 125, density: 0.5
+Average time: 14.4592
+
+Prim's algorithm for list graph. Vertices: 125, density: 0.5
+Average time: 7.99419
+
+Dijikstra's algorithm for matrix graph. Vertices: 125, density: 0.5
+Average time: 0.755059
+
+Dijikstra's algorithm for list graph. Vertices: 125, density: 0.5
+Average time: 0.954573
+
+Prim's algorithm for matrix graph. Vertices: 125, density: 0.75
+Average time: 27.0291
+
+Prim's algorithm for list graph. Vertices: 125, density: 0.75
+Average time: 26.9492
+
+Dijikstra's algorithm for matrix graph. Vertices: 125, density: 0.75
+Average time: 4.46088
+
+Dijikstra's algorithm for list graph. Vertices: 125, density: 0.75
+Average time: 2.86045
+
+Prim's algorithm for matrix graph. Vertices: 125, density: 0.99
+Average time: 55.4934
+
+Prim's algorithm for list graph. Vertices: 125, density: 0.99
+Average time: 54.2276
+
+Dijikstra's algorithm for matrix graph. Vertices: 125, density: 0.99
+Average time: 3.53971
+
+Dijikstra's algorithm for list graph. Vertices: 125, density: 0.99
+Average time: 2.41583
+
+Prim's algorithm for matrix graph. Vertices: 150, density: 0.25
+Average time: 6.03879
+
+Prim's algorithm for list graph. Vertices: 150, density: 0.25
+Average time: 3.03742
+
+Dijikstra's algorithm for matrix graph. Vertices: 150, density: 0.25
+Average time: 0.894409
+
+Dijikstra's algorithm for list graph. Vertices: 150, density: 0.25
+Average time: 0.801317
+
+Prim's algorithm for matrix graph. Vertices: 150, density: 0.5
+Average time: 32.0171
+
+Prim's algorithm for list graph. Vertices: 150, density: 0.5
+Average time: 31.7583
+
+Dijikstra's algorithm for matrix graph. Vertices: 150, density: 0.5
+Average time: 4.75239
+
+Dijikstra's algorithm for list graph. Vertices: 150, density: 0.5

@@ -67,6 +67,12 @@ void PrimMenu::generateRandomGraph(int vertex, double density)
 	int maxEdges = vertex * (vertex - 1) / 2;
 	int edges = density * maxEdges;
 
+	if (edges < vertex - 1)
+	{
+		std::cout << "Przy tej gestosci graf moze nie byc spojny!" << std::endl;
+		return;
+	}
+
 	int** edgesMatrix = new int*[vertex];
 	for (int i = 0; i < vertex; i++) edgesMatrix[i] = new int[vertex];
 
@@ -95,7 +101,7 @@ void PrimMenu::generateRandomGraph(int vertex, double density)
 				endVertex = rand() % i;
 			} while (endVertex == i);
 
-			weight = rand() % 10000;
+			weight = rand() % 100000;
 			edgesMatrix[i][endVertex] = weight;
 			edgesMatrix[endVertex][i] = weight;
 			file << i << " " << endVertex << " " << weight << std::endl;
@@ -109,7 +115,7 @@ void PrimMenu::generateRandomGraph(int vertex, double density)
 				endVertex = rand() % vertex;
 			} while (endVertex == startVertex || edgesMatrix[startVertex][endVertex] != INT32_MAX || edgesMatrix[endVertex][startVertex] != INT32_MAX);
 
-			weight = rand() % 10000;
+			weight = rand() % 100000;
 			edgesMatrix[startVertex][endVertex] = weight;
 			edgesMatrix[endVertex][startVertex] = weight;
 			file << startVertex << " " << endVertex << " " << weight << std::endl;

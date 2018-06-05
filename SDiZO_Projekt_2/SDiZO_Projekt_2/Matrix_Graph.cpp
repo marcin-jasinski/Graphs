@@ -33,14 +33,14 @@ void Matrix_Graph::readFromFile(std::string sourceFile, std::string type)
 		file >> edges >> vertex;
 		int i, j;
 
-		graphMatrix = new int*[vertex];									
-		for (i = 0; i < vertex; i++) graphMatrix[i] = new int[edges];
+		graphMatrix = new int*[vertex];		// tworzenie tablicy dynamicznej o rozmiarze = ilości wierzchołków
+		for (i = 0; i < vertex; i++) graphMatrix[i] = new int[edges];	// dla każdego wierzchołka nowa tablica o rozmiarze = liczba krawędzi
 
-		edgeWeights = new int[edges];	
+		edgeWeights = new int[edges];	// tablica wag krawędzi
 
 		for (i = 0; i < vertex; i++) {
 			for (j = 0; j < edges; j++) {
-				graphMatrix[i][j] = 0;		
+				graphMatrix[i][j] = 0;			// początkowa inicjalizacja zerami
 			}
 		}
 
@@ -86,7 +86,7 @@ void Matrix_Graph::print()
 	std::cout << "\nWeights of edges: " << std::endl;
 	for (int i = 0; i < edges; i++)
 	{
-		std::cout << std::setw(2) << "[" << edgeWeights[i] << "]";
+		std::cout << std::setw(2) << i << "->(" << edgeWeights[i] << ")";
 	}
 	std::cout << std::endl;
 }
@@ -132,7 +132,8 @@ void Matrix_Graph::Prims_algorithm()
 		}
 		*/
 
-		edge = queue.getRoot();
+		edge = queue.getRoot(); // pobranie pierwszej krawędzi z kopca (krawędź o najmniejszej wadze)
+
 		if (edge == nullptr)
 		{
 			v++;
@@ -140,7 +141,7 @@ void Matrix_Graph::Prims_algorithm()
 			continue;
 		}
 
-		do
+		do	// czyszczenie kopca
 		{
 			queue.deleteRoot();
 		} while (!edge->endVertex);
@@ -152,6 +153,7 @@ void Matrix_Graph::Prims_algorithm()
 		v = edge->endVertex;
 	}
 
+	/*
 	int e = primsEdges.getSize();
 	int totalCost = 0;
 	std::cout << "\n\nMinimal Spanning Tree for incidency matrix representation" << std::endl;
@@ -161,12 +163,16 @@ void Matrix_Graph::Prims_algorithm()
 	totalCost += primsEdges[i]->weight;
 	}
 	std::cout << "\nTotal cost: " << totalCost << std::endl;
+	*/
 }
 
 void Matrix_Graph::Dijikstras_algorithm(int startVertex, int endVertex)
 {
 	int* d = new int[vertex]; // tablica kosztów dojścia od startVertex do d[i]
 	int* p = new int[vertex]; // tablica poprzedników na ścieżce
+
+	bool* visited = new bool[vertex];
+	for (int i = 0; i < vertex; i++) visited[i] = false;
 
 	for (int i = 0; i < vertex; i++)
 	{
@@ -175,6 +181,7 @@ void Matrix_Graph::Dijikstras_algorithm(int startVertex, int endVertex)
 	}
 		
 	d[startVertex] = 0;		// koszt odwiedzenia samego siebie równy zero
+	visited[startVertex] = true;
 
 	BinaryHeap queue = BinaryHeap();
 	queue.addNewElement(new Edge(-1, startVertex, d[startVertex]));
@@ -182,16 +189,33 @@ void Matrix_Graph::Dijikstras_algorithm(int startVertex, int endVertex)
 	Array dijikstrasEdges = Array();
 	Edge* edge;
 
-
 	int unvisitedVertices = vertex - 1;
 	int v;
-
+	bool breakFlag = false;
+	
 	while (unvisitedVertices > 0)
 	{
-		v = queue.getRoot()->endVertex;
+		while (true)
+		{
+			if (queue.getRoot() == nullptr)
+			{
+				breakFlag == true;
+				break;
+			}
+
+			v = queue.getRoot()->endVertex;
+			if (visited[v] == false) break;
+
+			queue.deleteRoot();
+		}
+		
+		if (breakFlag == true) break;
+
 		if (v == endVertex) break;
+		
 		queue.deleteRoot();
 		//std::cout << "\n==> Current vertex: " << v << std::endl;
+		visited[v] = true;
 
 		for (int e = 0; e < edges; e++) 
 		{
@@ -226,12 +250,13 @@ void Matrix_Graph::Dijikstras_algorithm(int startVertex, int endVertex)
 		unvisitedVertices--;
 	}
 
-	if (d[endVertex] == INT32_MAX)
+	if (d[endVertex] == INT32_MAX) // jeżeli wierzchołek ani razu nie został odwiedzony
 	{
-		std::cout << "Shortes path from " << startVertex << " to " << endVertex << " does not exist" << std::endl;
+		//std::cout << "Shortes path from " << startVertex << " to " << endVertex << " does not exist in matrix representation" << std::endl;
 		return;
 	}
 
+	/*
 	int e = dijikstrasEdges.getSize();
 	int currentVertex = endVertex;
 	std::cout << "\n\nShortest path for incidency matrix representation " << std::endl;
@@ -241,4 +266,5 @@ void Matrix_Graph::Dijikstras_algorithm(int startVertex, int endVertex)
 		currentVertex = p[currentVertex];
 	}
 	std::cout << "\nTotal cost: " << d[endVertex] << std::endl;
+	*/
 }

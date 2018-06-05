@@ -64,7 +64,7 @@ void Benchmark_tests::generateRandomGraph(int vertex, double density)
 				endVertex = rand() % i;
 			} while (endVertex == i);
 
-			weight = rand() % 10000;
+			weight = rand() % 100000;
 			edgesMatrix[i][endVertex] = weight;
 			edgesMatrix[endVertex][i] = weight;
 			file << i << " " << endVertex << " " << weight << std::endl;
@@ -78,7 +78,7 @@ void Benchmark_tests::generateRandomGraph(int vertex, double density)
 				endVertex = rand() % vertex;
 			} while (endVertex == startVertex && (edgesMatrix[startVertex][endVertex] != INT32_MAX || edgesMatrix[endVertex][startVertex] != INT32_MAX));
 
-			weight = rand() % 10000;
+			weight = rand() % 100000;
 			edgesMatrix[startVertex][endVertex] = weight;
 			edgesMatrix[endVertex][startVertex] = weight;
 			file << startVertex << " " << endVertex << " " << weight << std::endl;

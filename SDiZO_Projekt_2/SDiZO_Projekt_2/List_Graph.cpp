@@ -28,7 +28,7 @@ void List_Graph::readFromFile(std::string sourceFile, std::string type)
 		file >> edges >> vertex;	
 		
 		Node* node;
-		adjacencyList = new Node*[vertex];
+		adjacencyList = new Node*[vertex];	// dynamiczna tablica list s¹siedztwa
 		for (int i = 0; i < vertex; i++) adjacencyList[i] = NULL;
 			
 		int startVertex, endVertex, weight;
@@ -139,6 +139,7 @@ void List_Graph::Prims_algorithm()
 		v = edge->endVertex;
 	}
 
+	/*
 	int e = primsEdges.getSize();
 	int totalCost = 0;
 	std::cout << "\n\nMinimal Spanning Tree for list representation" << std::endl;
@@ -148,6 +149,7 @@ void List_Graph::Prims_algorithm()
 		totalCost += primsEdges[i]->weight;
 	}
 	std::cout << "\nTotal cost: " << totalCost << std::endl;;
+	*/
 
 	delete edge;
 	delete node;
@@ -159,6 +161,9 @@ void List_Graph::Dijikstras_algorithm(int startVertex, int endVertex)
 	int* d = new int[vertex]; // tablica kosztów dojœcia od startVertex do d[i]
 	int* p = new int[vertex]; // tablica poprzedników na œcie¿ce
 
+	bool* visited = new bool[vertex];
+	for (int i = 0; i < vertex; i++) visited[i] = false;
+
 	for (int i = 0; i < vertex; i++)
 	{
 		d[i] = INT32_MAX;	// tablica kosztów unstawiona na najwiêksz¹ wartoœæ ("nieskoñczonoœæ")
@@ -166,6 +171,7 @@ void List_Graph::Dijikstras_algorithm(int startVertex, int endVertex)
 	}
 
 	d[startVertex] = 0;		// koszt odwiedzenia samego siebie równy zero
+	visited[startVertex] = true;
 
 	BinaryHeap queue = BinaryHeap();
 	queue.addNewElement(new Edge(-1, startVertex, d[startVertex]));
@@ -176,13 +182,31 @@ void List_Graph::Dijikstras_algorithm(int startVertex, int endVertex)
 
 	int unvisitedVertices = vertex - 1;
 	int v, v2;
+	bool breakFlag = false;
 
 	while (unvisitedVertices > 0)
 	{
-		v = queue.getRoot()->endVertex;
+		while (true)
+		{
+			if (queue.getRoot() == nullptr)
+			{
+				breakFlag == true;
+				break;
+			}
+
+			v = queue.getRoot()->endVertex;
+			if (visited[v] == false) break;
+
+			queue.deleteRoot();
+		}
+
+		if (breakFlag == true) break;
+		
 		if (v == endVertex) break;
+
 		queue.deleteRoot();
 		//std::cout << "\n==> Current vertex: " << v << std::endl;
+		visited[v] = true;
 
 		node = getNeighboursList(v);
 		while (node)
@@ -215,10 +239,11 @@ void List_Graph::Dijikstras_algorithm(int startVertex, int endVertex)
 
 	if (d[endVertex] == INT32_MAX)
 	{
-		std::cout << "Shortes path from " << startVertex << " to " << endVertex << " does not exist" << std::endl;
+		//std::cout << "Shortes path from " << startVertex << " to " << endVertex << " does not exist in list representation" << std::endl;
 		return;
 	}
 
+	/*
 	int e = dijikstrasEdges.getSize();
 	int currentVertex = endVertex;
 	std::cout << "\n\nShortest path for list representation: " << std::endl;
@@ -228,4 +253,5 @@ void List_Graph::Dijikstras_algorithm(int startVertex, int endVertex)
 		currentVertex = p[currentVertex];
 	}
 	std::cout << "\nTotal cost: " << d[endVertex] << std::endl;
+	*/
 }
